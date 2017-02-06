@@ -1,0 +1,189 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://www.codeplex.com/prism"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Punfai.Report.Wpf"
+    xmlns:designers="clr-namespace:Punfai.Report.Wpf.Designers"
+    xmlns:mpx="clr-namespace:Punfai.Report.Wpf"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+	x:Class="Punfai.Report.Wpf.DesignMainView"
+    mc:Ignorable="d" d:DesignHeight="782.396" d:DesignWidth="1008.091"
+    d:DataContext="{d:DesignInstance {x:Type vm:DesignMainViewModel}, IsDesignTimeCreatable=True}" 
+    FontFamily="{DynamicResource RegularFontFamily}" FontSize="{DynamicResource RegularFontSize}">
+    <UserControl.Resources>
+    	<ResourceDictionary>
+    		<ResourceDictionary.MergedDictionaries>
+    		</ResourceDictionary.MergedDictionaries>
+
+			<DataTemplate x:Key="possibleDesignerTemplate">
+				<Grid d:DesignWidth="202">
+					<Button Command="{Binding ElementName=homeCanvas, Path=DataContext.CreateWithCommand}" CommandParameter="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Style="{DynamicResource Button3Style}" Padding="6,6,4,4" Background="#FFF0DF77" BorderBrush="#55F1F1F1">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding Name}"/>
+							<Rectangle Margin="15 0 0 0" Width="25" Fill="{DynamicResource greenArrowBrush}"/>
+						</StackPanel>
+					</Button>
+				</Grid>
+			</DataTemplate>
+
+			<DataTemplate DataType="{x:Type designers:DefaultDesignerViewModel}">
+                <designers:DefaultDesignerView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+	<Border>
+		<i:Interaction.Behaviors>
+			<mpx:EnumStateBehavior EnumProperty="{Binding ScreenState}" />
+		</i:Interaction.Behaviors>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="CommonStates">
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0"/>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="HomeState">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="designerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="dataGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="selectDesignerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="listView">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="SelectReportTypeState">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="designerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="dataGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="selectDesignerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="SelectDesignerState">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="designerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="DesignerState">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="homeCanvas">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="EditWithDesignerState">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock1">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="listView">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="textBlock">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="dataGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="designerGrid">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+        
+		<VisualStateManager.CustomVisualStateManager>
+			<ei:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+        
+		<Grid x:Name="LayoutRoot">
+			<Canvas x:Name="homeCanvas" d:IsHidden="True">
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="{DynamicResource BigHeadingFontSize}" FontWeight="Bold" Canvas.Left="10"><Run Language="en-au" Text="Reports"/></TextBlock>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Message, Mode=OneWay}" VerticalAlignment="Top" FontSize="{DynamicResource LargeContentFontSize}" Canvas.Left="513" Canvas.Top="32"/>
+				<DataGrid ItemsSource="{Binding Reports}" HorizontalAlignment="Left" Height="283" VerticalAlignment="Top" Width="732" Canvas.Top="90.103" Canvas.Left="10" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" IsReadOnly="True">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseDoubleClick">
+							<i:InvokeCommandAction Command="{Binding EditCommand, Mode=OneWay}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<DataGrid.Columns>
+						<DataGridTextColumn Binding="{Binding ID}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+						<DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Report Name" Width="150"/>
+						<DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description" Width="300"/>
+						<DataGridTextColumn Binding="{Binding ReportType}" ClipboardContentBinding="{x:Null}" Header="File Type" Width="150"/>
+					</DataGrid.Columns>
+				</DataGrid>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="68.013" Canvas.Left="10"><Run Language="en-au" Text="Available reports"/></TextBlock>
+				<Button Command="{Binding CreateCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="172" Background="#FF4CC14C" Foreground="White" Height="27.96" Canvas.Top="379.341" Canvas.Left="10">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Create new report"/>
+						<Rectangle Fill="{DynamicResource plusBrush}" Width="30" Margin="9,0,0,0"/>
+					</StackPanel>
+				</Button>
+				<Button Content="Edit" Command="{Binding EditCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="173.695" Background="#FF4C80CB" Foreground="White" Height="27.96" Canvas.Left="568.305" Canvas.Top="379.341"/>
+				<Button Command="{Binding DeleteCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Background="#FFF77878" Foreground="White" Height="27.96" Canvas.Left="324.656" Canvas.Top="379.341">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Delete"/>
+						<Rectangle Fill="{DynamicResource crossBrush}" Width="20" Margin="9,0,0,0"/>
+					</StackPanel>
+				</Button>
+				<TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="138.431" Canvas.Top="419.354" Canvas.Left="10"><Run Language="en-au" Text="{Binding ReportTypesMessage, Mode=OneWay}"/></TextBlock>
+                <ListView x:Name="listView" HorizontalAlignment="Left" VerticalAlignment="Top" Height="199.09" Width="235.583" ItemsSource="{Binding ReportTypesCV}" Canvas.Top="441.444" Canvas.Left="10" IsSynchronizedWithCurrentItem="True" SelectionMode="Single">
+                	<ListView.View>
+                		<GridView>
+                			<GridViewColumn Header="Report Type" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                			<GridViewColumn Header="File Type" DisplayMemberBinding="{Binding DocumentType}"/>
+                		</GridView>
+                	</ListView.View>
+                </ListView>
+				<Grid x:Name="selectDesignerGrid" Height="200" Canvas.Left="276" Canvas.Top="440.534" Width="402">
+					<TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,3.91,0,0"><Run Language="en-au" Text="Edit with:"/></TextBlock>
+					<ItemsControl HorizontalAlignment="Left" Height="174" Margin="0,26,0,0" VerticalAlignment="Top" Width="402" ItemsSource="{Binding PossibleDesigners}" ItemTemplate="{DynamicResource possibleDesignerTemplate}"/>
+				</Grid>
+				<TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="760.091" Canvas.Top="419.354"><Run Language="en-au" Text="Report Designers"/></TextBlock>
+				<DataGrid x:Name="dataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" Width="238" ItemsSource="{Binding DesignersCV}" Canvas.Left="760.091" Canvas.Top="441.444" IsSynchronizedWithCurrentItem="True"/>
+			</Canvas>
+			<Grid x:Name="designerGrid">
+				<Button Command="{Binding BackCommand}" ToolTip="Back" HorizontalAlignment="Left" Margin="10,0.001,0,0" VerticalAlignment="Top" Width="43" Height="58.592" Style="{DynamicResource ButtonStyleUp}"/>
+				
+				<StackPanel Margin="58,16.79,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="{DynamicResource SectionHeadingFontSize}" FontWeight="Bold"><Run Language="en-au" Text="Reports &gt; Design"/></TextBlock>
+				</StackPanel>
+				<StackPanel Margin="223,10,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="{DynamicResource SubHeadingFontSize}" FontWeight="Bold">
+						<Run Language="en-au" Text="{Binding DesignersCV.CurrentItem.Name, Mode=OneWay}"/>
+						<Run Language="en-au" Text=" "/>
+						<Run Language="en-au" FontSize="16" Text="{Binding ReportTypesCV.CurrentItem.DocumentType, StringFormat=(file type: {0}), Mode=OneWay}"/>
+					</TextBlock>
+				</StackPanel>
+				<ContentPresenter Margin="0,63.593,0,0" Content="{Binding ActiveDesigner}"/>
+			</Grid>
+		</Grid>
+
+	</Border>
+
+</UserControl>

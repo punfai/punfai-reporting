@@ -1,0 +1,62 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:Punfai.Report.Wpf.Consumer"
+    x:Class="Punfai.Report.Wpf.Consumer.RegularConsumerView"
+    mc:Ignorable="d" d:DesignHeight="614" d:DesignWidth="790.5" FontFamily="{DynamicResource RegularFontFamily}" FontSize="{DynamicResource RegularFontSize}"
+    d:DataContext="{d:DesignInstance {x:Type local:RegularConsumerViewModel}, IsDesignTimeCreatable=True}" 
+	>
+	<UserControl.Resources>
+		<ResourceDictionary>
+            <DataTemplate x:Key="ParameterTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name, Mode=OneWay}" Width="130" Margin="4"/>
+                    <TextBox Text="{Binding Value, Mode=TwoWay}" Width="130" Margin="4"/>
+                    <TextBlock Foreground="Gray" FontSize="10" Width="Auto" Margin="4">
+                        <Run Text="(eg: "/>
+                        <Run Text="{Binding TestValue, Mode=OneWay}"/>
+                        <Run Text=")"/>
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+	</UserControl.Resources>
+
+    <Border CornerRadius="10" BorderBrush="{x:Null}" BorderThickness="2" Padding="5" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="{x:Null}">
+
+		<ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="767">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="11*"/>
+                    <RowDefinition Height="119*"/>
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="NoWrap" FontSize="26.667" Text="Semi-automatic reporting" Margin="9,5,0,6"/>
+                <Border BorderBrush="#FFC08888" BorderThickness="1" Background="White" CornerRadius="5" Padding="0,11,0,0" Margin="10,12,10,0" Grid.Row="1" VerticalAlignment="Top">
+                    <StackPanel Margin="5">
+                        <StackPanel Height="24" Orientation="Horizontal" Margin="22,0,144,0">
+                            <TextBlock TextWrapping="Wrap" Margin="0" VerticalAlignment="Center"><Run Language="en-au" Text="Select a report"/></TextBlock>
+                            <ComboBox ItemsSource="{Binding Reports}" DisplayMemberPath="Name" Width="400" Margin="30,0,0,0"/>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Reports.CurrentItem.Parameters}" ItemTemplate="{StaticResource ParameterTemplate}" Margin="10,20,10,10" MinHeight="40" ScrollViewer.CanContentScroll="True" />
+                        <StackPanel Height="44" Orientation="Horizontal" Margin="8,0,321,0">
+                            <Button Padding="5" x:Name="GenerateButton" Command="{Binding GenerateCommand}" Width="147" Background="#FF22AF1E">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Margin="15,0,0,0"><Run Text="Generate"/><LineBreak /><Run Text="Report"/></TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <ProgressBar Value="{Binding ReportProgress, Mode=OneWay}" Width="173" Margin="30,0,0,0" VerticalAlignment="Center" Height="14"/>
+                        </StackPanel>
+                        <TextBlock Height="40" TextWrapping="Wrap" FontSize="12" Text="{Binding ReportMessage, Mode=OneWay}" Foreground="#FFA13C61" Margin="10,15,10,0"/>
+                    </StackPanel>
+                </Border>
+
+            </Grid>
+
+        </ScrollViewer>
+
+	</Border>
+
+</UserControl>
