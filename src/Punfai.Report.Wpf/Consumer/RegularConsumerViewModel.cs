@@ -55,7 +55,7 @@ namespace Punfai.Report.Wpf.Consumer
 
         public string[] Role
         {
-            get { return new [] { ReportingRoles.ReportConsumer, ReportingRoles.ReportDesigner }; }
+            get { return new [] { "" }; }
         }
 
         public int Order

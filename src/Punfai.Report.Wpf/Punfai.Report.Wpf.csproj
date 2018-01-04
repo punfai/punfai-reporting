@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Punfai.Report.Wpf</RootNamespace>
     <AssemblyName>Punfai.Report.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -32,24 +32,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -62,6 +46,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="6.2.0" />
+    <PackageReference Include="Punfai.Report" Version="0.1.0" />
+    <PackageReference Include="Punfai.Report.IronScript">
+      <Version>0.1.2</Version>
+    </PackageReference>
+    <PackageReference Include="Punfai.Report.OfficeOpenXml" Version="0.1.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -95,16 +87,6 @@
     <Compile Include="Utils\OfficeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Punfai.Report.IronScript\Punfai.Report.IronScript.csproj">
-      <Project>{8b00f21c-f81b-4dab-a87e-74bc4d7aa550}</Project>
-      <Name>Punfai.Report.IronScript</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Punfai.Report.Pcl\Punfai.Report.Pcl.csproj">
-      <Project>{77cf5ee8-ffc0-49ee-b06d-c3c88ce59f8a}</Project>
-      <Name>Punfai.Report.Pcl</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Assets\Drawings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,22 +113,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj">
+      <Project>{35C97AFB-07F1-4502-87D2-A8D2D5528F9F}</Project>
+      <Name>Punfai.Report</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-  xcopy "$(TargetDir)*.dll" "$(SolutionDir)\..\..\Build\Latest\$(ProjectName)\" /y
-) ELSE (
-  echo "why, Microsoft, why".
-)
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
