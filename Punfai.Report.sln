@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{607D13C3-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PunRunWpf", "demo\PunRunWpf\PunRunWpf.csproj", "{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Punfai.Report.Ibex", "src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj", "{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,18 @@ Global
 		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x64.Build.0 = Release|Any CPU
 		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x86.Build.0 = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|x64.Build.0 = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Debug|x86.Build.0 = Debug|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|x64.ActiveCfg = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|x64.Build.0 = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|x86.ActiveCfg = Release|Any CPU
+		{07D5421A-82A0-4ED1-B40B-EC5675D93D0B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
