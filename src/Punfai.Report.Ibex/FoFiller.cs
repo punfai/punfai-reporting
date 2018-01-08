@@ -6,14 +6,10 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Packaging;
 using System.Text.RegularExpressions;
 using Punfai.Report.Interfaces;
-using Punfai.Report.OfficeOpenXml.Utils;
 using Punfai.Report.Utils;
 using System.Threading.Tasks;
-using Punfai.Report.OfficeOpenXml.ReportTypes;
 
 namespace Punfai.Report.Ibex
 {

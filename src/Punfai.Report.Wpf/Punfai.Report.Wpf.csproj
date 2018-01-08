@@ -49,11 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="6.2.0" />
-    <PackageReference Include="Punfai.Report" Version="0.1.0" />
+    <PackageReference Include="Punfai.Report" Version="0.1" />
     <PackageReference Include="Punfai.Report.IronScript">
-      <Version>0.1.2</Version>
+      <Version>0.1</Version>
     </PackageReference>
-    <PackageReference Include="Punfai.Report.OfficeOpenXml" Version="0.1.2" />
+    <PackageReference Include="Punfai.Report.OfficeOpenXml" Version="0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -117,6 +117,12 @@
       <Project>{35C97AFB-07F1-4502-87D2-A8D2D5528F9F}</Project>
       <Name>Punfai.Report</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packnuget.ps1" />
+    <None Include="Punfai.Report.Wpf.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

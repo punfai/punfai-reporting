@@ -11,10 +11,10 @@
     <PackageReleaseNotes>First release</PackageReleaseNotes>
     <Copyright>Copyright 2017 (c) Punfai. All rights reserved.</Copyright>
     <PackageTags>reporting reports</PackageTags>
-    <FileVersion>0.1.1.0</FileVersion>
+    <FileVersion>0.1.2.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Punfai.Report" Version="0.1.0" />
+    <PackageReference Include="Punfai.Report" Version="0.1.2" />
     <PackageReference Include="IronPython" Version="2.7.7" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

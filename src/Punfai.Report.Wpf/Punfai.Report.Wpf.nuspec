@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Punfai.Report.Wpf</id>
+    <version>0.1.2</version>
+    <title>Punfai.Report.Wpf</title>
+    <authors>Nik Petroff</authors>
+    <owners>Nik Petroff</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WPF views for report designer</description>
+    <releaseNotes>Trying out the nuget.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>Reporting WPF</tags>
+  </metadata>
+</package>
