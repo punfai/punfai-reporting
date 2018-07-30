@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package >
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
@@ -9,14 +9,14 @@
     <projectUrl>http://www.punfai.com/report</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Trying out the nuget.</releaseNotes>
+    <releaseNotes>Make a nuget</releaseNotes>
     <copyright>Copyright 2018</copyright>
-    <tags>Reporting WPF</tags>
+    <tags>FO PDF Report</tags>
     <dependencies>
       <dependency id="Punfai.Report" version="$version$" />
-      <dependency id="Punfai.Report.Ibex" version="$version$" />
-      <dependency id="Punfai.Report.IronScript" version="$version$" />
-      <dependency id="Punfai.Report.OfficeOpenXml" version="$version$" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="lib\ibex11.DLL" target="lib\net461\" />
+  </files>
 </package>

@@ -1,26 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Punfai.Report.Interfaces;
+using System.IO;
+using System.Xml.Linq;
 
-namespace Punfai.Report.Template
+namespace Punfai.Report.Ibex
 {
     /// <summary>
-    /// The default ITemplate for a plain text document (utf8?) with a single section (Body)
+    /// You could make this more interesting than a PlainTextTemplate if you wanted
     /// </summary>
-    public class PlainTextTemplate : ITemplate
+    public class XslFoTemplate : ITemplate
     {
+        private List<string> sectionNames;
         private string bodySection;
-        public PlainTextTemplate(byte[] templateBytes)
+        private bool loaded = false;
+        public XslFoTemplate(byte[] templateBytes)
         {
             if (templateBytes == null) bodySection = "";
             else bodySection = System.Text.UTF8Encoding.UTF8.GetString(templateBytes, 0, templateBytes.Length);
-            SectionNames = new[] { "Body" };
+            sectionNames = new List<string>(new[] { "Body" });
             IsChanged = false;
         }
-        public IEnumerable<string> SectionNames { get; private set; }
+
+        #region properties
+        public IEnumerable<string> SectionNames { get { return sectionNames; } }
+        public bool IsChanged
+        {
+            get;
+            private set;
+        }
+        #endregion
+
+        #region public methods
+        public void AcceptChanges()
+        {
+            IsChanged = false;
+        }
+
         public byte[] GetTemplateBytes()
         {
             byte[] buf = System.Text.Encoding.UTF8.GetBytes(bodySection);
@@ -38,16 +54,6 @@ namespace Punfai.Report.Template
             bodySection = text;
             return true;
         }
-
-        public void AcceptChanges()
-        {
-            IsChanged = false;
-        }
-
-        public bool IsChanged
-        {
-            get;
-            private set;
-        }
+        #endregion
     }
 }

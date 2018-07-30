@@ -6,36 +6,45 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Linq;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Packaging;
-using System.Text.RegularExpressions;
-using Punfai.Report.Interfaces;
-using Punfai.Report.OfficeOpenXml.Utils;
 using Punfai.Report.Utils;
 using System.Threading.Tasks;
-using Punfai.Report.OfficeOpenXml.ReportTypes;
+using System.Xml.Xsl;
+using System.Xml.XPath;
 
 namespace Punfai.Report.Ibex
 {
-    public class XsltFoFiller : IReportFiller
+    public class XslFoFiller : IReportFiller
     {
-        public Type[] SupportedReports { get { return new[] { typeof(XsltFoReportType) }; } }
+        public Type[] SupportedReports { get { return new Type[] { }; } }
+        public string LastError { get; private set; }
 
-        public const string LIC_XMLPDFLicense = "Mesh.GUI.WinForms.Library.xmlpdf.lic";
         private XslCompiledTransform transform;
         private XsltArgumentList xal;
 		private Encoding encoding;
-        private string licPath;
 
-		public XsltFoFiller()
+		public XslFoFiller()
 		{
             transform = new XslCompiledTransform();
             xal = new XsltArgumentList();
 			//xal.AddExtensionObject("http://mesh/xsltools", new Mesh.Reporting.XSLTools());
-			pdfFilePath = "";
-            licPath = Path.Combine(pdfFilePath);
         }
-		public string PageWidth
+
+        public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
+        {
+            // TODO: make this more asyncy
+            XmlWriter writer = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = UTF8Encoding.UTF8, Indent = true, Async = true });
+            // should only be one section
+            foreach (var section in t.SectionNames)
+            {
+            }
+            await writer.FlushAsync();
+            return true;
+        }
+
+        #region private stuff
+        /*
+
+        public string PageWidth
 		{
 			set
 			{
@@ -63,17 +72,17 @@ namespace Punfai.Report.Ibex
 			get { return encoding; }
 			set { encoding = value; }
 		}
-        public void Load(Stream xslStream, Assembly resourceAssembly = null)
+        private void Load(Stream xslStream, Assembly resourceAssembly = null)
         {
             XPathDocument xpdxsl = new XPathDocument(xslStream);
             XsltSettings settings = new XsltSettings();
             XmlResolver resolver = null;
-            if (resourceAssembly != null) resolver = new XmlResourceStreamResolver(resourceAssembly);
+            //if (resourceAssembly != null) resolver = new XmlResourceStreamResolver(resourceAssembly);
             try
             {
                 transform.Load(xpdxsl, settings, resolver);
             }
-            catch (System.Xml.Xsl.XsltCompileException xex) { News.AddError(this.GetType().FullName + ".Transform", null, xex); }
+            catch (XsltCompileException xex) { News.AddError(this.GetType().FullName + ".Transform", null, xex); }
             catch (Exception ex) { News.AddError(this.GetType().FullName + ".Transform", "problem generating pdf", ex); }
         }
         public bool Transform(Stream xmlStream, string outputFilePath)
@@ -121,31 +130,8 @@ namespace Punfai.Report.Ibex
 			}
 			return true;
 		}
-
-	}
-    public class XsltFoFiller : IReportFiller
-    {
-        public Type[] SupportedReports { get { return new[] { typeof(XsltFoReportType) }; } }
-
-        public Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
-        {
-            // TODO: make this more asyncy
-            XmlWriter writer = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = UTF8Encoding.UTF8, Indent = true, Async = true });
-            // should only be one section
-            foreach (var section in t.SectionNames)
-            {
-                XDocument doc;
-                try { doc = XDocument.Parse(t.GetSectionText(section)); }
-                catch (Exception) { continue; }
-                foreach (KeyValuePair<string, dynamic> pair in stuffing)
-                {
-                    XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value);
-                }
-                // doc is now a filled out FO
-            }
-            await writer.FlushAsync();
-            return true;
-        }
+        */
+        #endregion
     }
 
 }

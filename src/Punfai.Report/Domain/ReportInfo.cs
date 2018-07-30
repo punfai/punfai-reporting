@@ -9,6 +9,14 @@ namespace Punfai.Report
 {
     public class ReportInfo
     {
+        public ReportInfo(string name, string reportType, string scriptingLanguage)
+        {
+            this.Name = name;
+            this.ReportType = reportType;
+            this.ScriptingLanguage = scriptingLanguage;
+            ID = -1;
+            Parameters = new ObservableCollection<InputParameter>();
+        }
         private ReportInfo()
         {
             Parameters = new ObservableCollection<InputParameter>();
@@ -31,6 +39,7 @@ namespace Punfai.Report
         public string Author { get; set; }
         public string Data { get; set; }
         public string TemplateFileName { get; set; }
+
 
         public class Builder
         {
@@ -114,6 +123,12 @@ namespace Punfai.Report
                 return ret;
             }
         }
+
+        #region methods
+        public void SetId(int id)
+        {
+            this.ID = id;
+        }
         private void processParameters(string parameters)
         {
             ObservableCollection<InputParameter> dic = new ObservableCollection<InputParameter>();
@@ -184,9 +199,16 @@ namespace Punfai.Report
         public bool SetInputParameter(string name, object value)
         {
             var p = Parameters.FirstOrDefault(a => a.Name == name);
-            if (p == null) return false;
-            p.Value = value;
+            if (p == null)
+            {
+                Parameters.Add(new InputParameter() { Name = name, Value = value });
+            }
+            else
+            {
+                p.Value = value;
+            }
             return true;
         }
+        #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace Punfai.Report.Fillers
     public class CsvFiller : IReportFiller
     {
         public Type[] SupportedReports { get { return new[] { typeof(CsvReportType) }; } }
+        public string LastError { get; private set; }
 
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
@@ -112,7 +113,7 @@ namespace Punfai.Report.Fillers
             // the caller owns the stream, they have to close it.
             // so don't go using() or closing the streamwriter
             await writer.FlushAsync();
-            Debug.WriteLine(errors);
+            LastError = errors.ToString();
             return true;
         }
         private void readSettings(IDictionary<string, object> stuffing, out bool quoteStrings)

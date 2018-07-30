@@ -102,18 +102,18 @@ namespace PunReportTests
             return utf8NoPreamble.GetBytes(blocks.ToString());
         }
 
-        private class Hobo
-        {
-            public Hobo(string firstName, float age) { FirstName = firstName; Age = age; DateOfBirth = DateTime.Today.AddYears(-(int)age); }
-            public string FirstName { get; set; }
-            public float Age { get; set; }
-            public DateTime DateOfBirth { get; set; }
-        }
-        private class Nogo
-        {
-            public Nogo(string street, string state) { Street = street; State = state; }
-            public string Street { get; set; }
-            public string State { get; set; }
-        }
+    }
+    class Hobo
+    {
+        public Hobo(string firstName, float age) { FirstName = firstName; Age = age; DateOfBirth = DateTime.Today.AddYears(-(int)age); }
+        public string FirstName { get; set; }
+        public float Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
+    }
+    class Nogo
+    {
+        public Nogo(string street, string state) { Street = street; State = state; }
+        public string Street { get; set; }
+        public string State { get; set; }
     }
 }

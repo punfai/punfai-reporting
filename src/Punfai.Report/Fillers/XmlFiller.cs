@@ -13,6 +13,7 @@ namespace Punfai.Report.Fillers
     public class XmlFiller : IReportFiller
     {
         public Type[] SupportedReports { get { return new[] { typeof(XmlReportType) }; } }
+        public string LastError { get; private set; }
 
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
@@ -22,8 +23,15 @@ namespace Punfai.Report.Fillers
             foreach (var section in t.SectionNames)
             {
                 XDocument doc;
-                try { doc = XDocument.Parse(t.GetSectionText(section)); }
-                catch (Exception) { continue; }
+                try
+                {
+                    doc = XDocument.Parse(t.GetSectionText(section));
+                }
+                catch (Exception ex)
+                {
+                    LastError = ex.Message;
+                    continue;
+                }
                 foreach (KeyValuePair<string, dynamic> pair in stuffing)
                 {
                     XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value);
@@ -31,6 +39,7 @@ namespace Punfai.Report.Fillers
                 doc.WriteTo(writer);
             }
             await writer.FlushAsync();
+            LastError = null;
             return true;
         }
     }

@@ -21,6 +21,8 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
     {
         public Type[] SupportedReports { get { return new[] { typeof(WordReportType) }; } }
 
+        public string LastError { get; private set; }
+
         public Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
             using (Stream docstream = new MemoryStream())

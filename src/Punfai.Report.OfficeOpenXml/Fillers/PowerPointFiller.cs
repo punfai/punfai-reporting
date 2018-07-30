@@ -17,6 +17,8 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
     {
         public Type[] SupportedReports { get { return new[] { typeof(PowerPointReportType) }; } }
 
+        public string LastError { get; private set; }
+
         public Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
             Console.WriteLine("Filling a template with {1}", this.GetType().Name);

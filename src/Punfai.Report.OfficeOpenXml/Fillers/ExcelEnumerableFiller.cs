@@ -22,6 +22,8 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
     {
         public Type[] SupportedReports { get { return new[] { typeof(ExcelReportType) }; } }
 
+        public string LastError { get; private set; }
+
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
             dynamic rows = stuffing.Values.FirstOrDefault(a => a is IEnumerable<object>);

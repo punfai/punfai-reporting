@@ -14,5 +14,6 @@ namespace Punfai.Report
     {
         Type[] SupportedReports { get; }
         Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output);
+        string LastError { get; }
     }
 }

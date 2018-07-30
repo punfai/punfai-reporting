@@ -249,6 +249,11 @@ namespace Punfai.Report.Wpf.Services
         {
             return baseService.FillReportAsync(t, rt, stuffing, output);
         }
+
+        public Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null)
+        {
+            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout);
+        }
         #endregion
 
     }
