@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\ibex11.DLL" target="lib\net461\" />
+    <file src="lib\ibex11.DLL" target="lib\net472\" />
   </files>
 </package>

@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:Punfai.Report.Wpf.Consumer"
     x:Class="Punfai.Report.Wpf.Consumer.RegularConsumerView"
-    mc:Ignorable="d" d:DesignHeight="614" d:DesignWidth="790.5" FontFamily="{DynamicResource RegularFontFamily}" FontSize="{DynamicResource RegularFontSize}"
+    mc:Ignorable="d" d:DesignHeight="614" d:DesignWidth="790.5"
     d:DataContext="{d:DesignInstance {x:Type local:RegularConsumerViewModel}, IsDesignTimeCreatable=True}" 
 	>
 	<UserControl.Resources>

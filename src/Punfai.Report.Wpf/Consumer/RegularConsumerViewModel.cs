@@ -75,16 +75,16 @@ namespace Punfai.Report.Wpf.Consumer
             if (report == null)
             {
                 ReportMessage = "No report selected ";
-                OnPropertyChanged(() => ReportMessage);
+                RaisePropertyChanged(nameof(ReportMessage));
                 return;
             }
             isWorking = true;
             GenerateCommand.RaiseCanExecuteChanged();
 
             ReportMessage = "Generating... ";
-            OnPropertyChanged(() => ReportMessage);
+            RaisePropertyChanged(nameof(ReportMessage));
             ReportProgress = 30;
-            OnPropertyChanged(() => ReportProgress);
+            RaisePropertyChanged(nameof(ReportProgress));
             foreach (var p in report.Parameters)
             {
                 Debug.WriteLine(string.Format("parameter {0}: :{1}", p.Name, p.Value));
@@ -94,8 +94,8 @@ namespace Punfai.Report.Wpf.Consumer
             await doReport(report, folder, filename);
             ReportMessage = "Report generated";// +message;
             ReportProgress = 100;
-            OnPropertyChanged(() => ReportMessage);
-            OnPropertyChanged(() => ReportProgress);
+            RaisePropertyChanged(nameof(ReportMessage));
+            RaisePropertyChanged(nameof(ReportProgress));
             isWorking = false;
             GenerateCommand.RaiseCanExecuteChanged();
         }
@@ -130,8 +130,8 @@ namespace Punfai.Report.Wpf.Consumer
             allReports = new List<ReportInfo>(reports);
             Reports = new ListCollectionView(allReports);
             Reports.CurrentChanged += Reports_CurrentChanged;
-            OnPropertyChanged(() => Reports);
-            OnPropertyChanged(() => ReportMessage);
+            RaisePropertyChanged(nameof(Reports));
+            RaisePropertyChanged(nameof(ReportMessage));
             GenerateCommand.RaiseCanExecuteChanged();
         }
         #endregion

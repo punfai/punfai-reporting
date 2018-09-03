@@ -50,9 +50,6 @@ namespace Punfai.Report
             var r = reports.FirstOrDefault(a => a.ID == id);
             if (r == null) throw new Exception($"Report not found, id={id}");
             var script = r.Script;
-            //var resourcePath = r.Script;
-            //var reader = new StreamReader(assembly.GetManifestResourceStream(resourcePath), UTF8Encoding.UTF8);
-            //var script = await reader.ReadToEndAsync();
             return script;
         }
 
@@ -65,12 +62,13 @@ namespace Punfai.Report
             try
             {
                 templateStream = assembly.GetManifestResourceStream(resourcePath);
+                if (templateStream == null) throw new Exception();
             }
             catch (Exception)
             {
                 throw new Exception($"embedded template resource not found {resourcePath}");
             }
-            var reader = new BinaryReader(templateStream, UTF8Encoding.UTF8);
+            var reader = new BinaryReader(templateStream, new UTF8Encoding(false));
             var template = reader.ReadBytes((int)reader.BaseStream.Length);
             return Task.FromResult(template);
         }

@@ -63,7 +63,7 @@ namespace Punfai.Report.Wpf.Services
                     PrintServer ps = new PrintServer(printServer);
                     printerList = ps.GetPrintQueues();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                 }
             }

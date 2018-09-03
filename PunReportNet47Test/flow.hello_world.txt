@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlowDocument FontFamily="Calibri" FontSize="14">
+    <FlowDocument.Resources>
+        <Style TargetType="{{x:Type Paragraph}}">
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+    </FlowDocument.Resources>
+    <Paragraph>
+        data['Title'] = 'Hello world'
+    </Paragraph>
+    <Paragraph FontSize="18" FontWeight="Bold">
+        {{Title}}
+    </Paragraph>
+    <Paragraph>
+        data['somelist'] = listofpeople
+    </Paragraph>
+    <Paragraph mesh-repeat="person in somelist">
+        {{person.FirstName}} {{person.Surname}}
+    </Paragraph>
+
+    <Table CellSpacing="0" Margin="0">
+        <Table.Columns>
+            <TableColumn Width="50"/>
+            <TableColumn Width="40"/>
+            <TableColumn/>
+        </Table.Columns>
+        <TableRowGroup>
+            <TableRow>
+                <TableCell BorderBrush="#444444" BorderThickness="0,0,0,1">
+                    <Paragraph>AAAA</Paragraph>
+                </TableCell>
+                <TableCell BorderBrush="#444444" BorderThickness="0,0,0,1">
+                    <Paragraph>BBBB</Paragraph>
+                </TableCell>
+                <TableCell BorderBrush="#444444" BorderThickness="0,0,0,1">
+                    <Paragraph>CCCC</Paragraph>
+                </TableCell>
+            </TableRow>
+            <TableRow mesh-repeat="person in somelist">
+                <TableCell TextAlignment="Right">
+                    <Paragraph Margin="1,0,3,0">
+                        {{person.Id}}
+                    </Paragraph>
+                </TableCell>
+                <TableCell>
+                    <Paragraph>
+                        <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                            {{person.FirstName}}
+                        </TextBlock>
+                    </Paragraph>
+                </TableCell>
+                <TableCell>
+                    <Paragraph>
+                        <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                            {{person.Surname}}
+                        </TextBlock>
+                    </Paragraph>
+                </TableCell>
+            </TableRow>
+        </TableRowGroup>
+    </Table>
+</FlowDocument>

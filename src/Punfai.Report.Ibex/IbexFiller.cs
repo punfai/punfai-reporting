@@ -45,6 +45,13 @@ namespace Punfai.Report.Ibex
             FODocument doc = new FODocument();
             string appPath = Directory.GetCurrentDirectory() + Path.PathSeparator;
             doc.setBaseURI(appPath);
+            MemoryStream memstream = new MemoryStream();
+            StreamReader r = new StreamReader(memstream);
+            var logger = xmlpdf.logging.Logger.getLogger();
+            logger.setLevel(Level.WARNING);
+            logger.clearHandlers();
+            StreamHandler h = new StreamHandler(memstream);
+            logger.addHandler(h);
             try
             {
                 fostream.Position = 0;
@@ -61,7 +68,14 @@ namespace Punfai.Report.Ibex
                 fostream.Close();
                 output.Close();
             }
-            LastError = null;
+            memstream.Position = 0;
+            var message = r.ReadToEnd();
+            logger.clearHandlers();
+            if (message != null && message.Length > 0)
+            {
+                LastError = message;
+                return false;
+            }
             return true;
         }
     }

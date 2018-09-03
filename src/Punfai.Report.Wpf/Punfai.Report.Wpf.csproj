@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Punfai.Report.Wpf</RootNamespace>
     <AssemblyName>Punfai.Report.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.Core" Version="6.2.0" />
+    <PackageReference Include="Prism.Core" Version="7.0.0.396" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />

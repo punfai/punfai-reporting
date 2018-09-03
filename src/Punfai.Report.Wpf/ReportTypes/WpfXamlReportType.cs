@@ -24,7 +24,7 @@ namespace Punfai.Report.Wpf.ReportTypes
         public IReportFiller Filler { get; private set; }
         public ITemplate CreateTemplate(byte[] templateBytes)
         {
-            return new PlainTextTemplate(templateBytes);
+            return new XmlTemplate(templateBytes);
         }
         public bool GetDefaultTemplate(out byte[] template)
         {

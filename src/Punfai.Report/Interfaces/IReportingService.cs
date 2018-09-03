@@ -10,6 +10,8 @@ namespace Punfai.Report
     public interface IReportingService
     {
         IEnumerable<IReportType> AvailableReportTypes { get; }
+
+        #region out with the old
         IReportType GetReportType(string reportTypeName);
         Task<Dictionary<string, dynamic>> RunScriptAsync(string scriptLanguage, IEnumerable<InputParameter> parameters, string script, Stream stdout = null);
 
@@ -19,8 +21,11 @@ namespace Punfai.Report
 
         // do everything in one call
         Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null);
+        #endregion
+
         // even better
         Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null);
+        Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null);
 
     }
 }

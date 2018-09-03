@@ -224,7 +224,7 @@ namespace Punfai.Report.Wpf
             ActiveDesigner = null;
             ScreenState = ScreenStates.HomeState;
             ReportTypesCV.MoveCurrentTo(null);
-            OnPropertyChanged(() => Reports);
+            RaisePropertyChanged(nameof(Reports));
             raise();
             //loadReports();
         }
@@ -246,12 +246,12 @@ namespace Punfai.Report.Wpf
                 cv0.CurrentChanged -= cv_CurrentChanged;
             }
             Reports = null;
-            OnPropertyChanged(() => Reports);
+            RaisePropertyChanged(nameof(Reports));
             var reports = await reprepo.GetAllAsync();
             Reports = new ObservableCollection<ReportInfo>(reports);
             var cv = CollectionViewSource.GetDefaultView(Reports);
             cv.CurrentChanged += cv_CurrentChanged;
-            OnPropertyChanged(() => Reports);
+            RaisePropertyChanged(nameof(Reports));
         }
 
         void cv_CurrentChanged(object sender, EventArgs e)
@@ -262,11 +262,11 @@ namespace Punfai.Report.Wpf
 
         private void raise()
         {
-            OnPropertyChanged(() => Message);
-            OnPropertyChanged(() => ReportTypesMessage);
-            OnPropertyChanged(() => PossibleDesigners);
-            OnPropertyChanged(() => ActiveDesigner);
-            OnPropertyChanged(() => ScreenState);
+            RaisePropertyChanged(nameof(Message));
+            RaisePropertyChanged(nameof(ReportTypesMessage));
+            RaisePropertyChanged(nameof(PossibleDesigners));
+            RaisePropertyChanged(nameof(ActiveDesigner));
+            RaisePropertyChanged(nameof(ScreenState));
             EditCommand.RaiseCanExecuteChanged();
             DeleteCommand.RaiseCanExecuteChanged();
         }

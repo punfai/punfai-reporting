@@ -6,6 +6,7 @@ using System.IO;
 using Punfai.Report.Interfaces;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Dynamic;
 
 namespace Punfai.Report
 {
@@ -26,6 +27,7 @@ namespace Punfai.Report
 
         public IEnumerable<IReportType> AvailableReportTypes { get { return reportTypes; } }
 
+        #region out with the old
         public IReportType GetReportType(string reportTypeName)
         {
             var rt = reportTypes.FirstOrDefault(item => item.Name == reportTypeName);
@@ -63,6 +65,7 @@ namespace Punfai.Report
             bool ok = await rt.Filler.FillAsync(t, stuffing, output);
             return ok;
         }
+        #endregion
 
         #region do everything: generate
         public async Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null)
@@ -110,8 +113,27 @@ namespace Punfai.Report
             if (ok)
                 return outputPath;
             else
-                return "Generation failed.";
+            {
+                if (stdout != null)
+                {
+                    StreamWriter w = new StreamWriter(stdout);
+                    await w.WriteAsync(rt.Filler.LastError);
+                    await w.FlushAsync();
+                }
+                return $"Generation failed. {rt.Filler.LastError}";
+            }
         }
+
+        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            foreach (var pair in inputParams)
+            {
+                dic[pair.Item1] = pair.Item2;
+            }
+            return GenerateReportAsync(reportName, dic, output, stdout);
+        }
+
         #endregion
 
         #region static helpers

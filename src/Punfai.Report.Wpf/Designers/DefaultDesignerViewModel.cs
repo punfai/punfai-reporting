@@ -87,7 +87,7 @@ namespace Punfai.Report.Wpf.Designers
                 {
                     _templateText = value;
                     ValidText = Template.SetSectionText(currentSection(), value);
-                    OnPropertyChanged(() => ValidText);
+                    RaisePropertyChanged(nameof(ValidText));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
@@ -128,7 +128,7 @@ namespace Punfai.Report.Wpf.Designers
                 return;
             }
             Message = "Running";
-            OnPropertyChanged("Message");
+            RaisePropertyChanged(nameof(Message));
 
             foreach (var p in ReportDefinition.Parameters)
                 p.Value = p.TestValue;
@@ -159,7 +159,7 @@ namespace Punfai.Report.Wpf.Designers
                 return;
             }
             Message = "Running";
-            OnPropertyChanged("Message");
+            RaisePropertyChanged(nameof(Message));
             output("--------starting--------");
 
             foreach (var p in ReportDefinition.Parameters)
@@ -234,7 +234,7 @@ namespace Punfai.Report.Wpf.Designers
             if (rt.GetDefaultTemplate(out buf))
             {
                 TemplateMessage = "Loading template...";
-                OnPropertyChanged(() => TemplateMessage);
+                RaisePropertyChanged(nameof(TemplateMessage));
                 await reprepo.SaveTemplateAsync(ReportDefinition.ID, buf);
                 Template = rt.CreateTemplate(buf);
                 ReportDefinition.TemplateFileName = "DefaultTemplate";
@@ -252,13 +252,13 @@ namespace Punfai.Report.Wpf.Designers
         private async void readTemplate(FileInfo info)
         {
             TemplateMessage = "Loading template...";
-            OnPropertyChanged(() => TemplateMessage);
+            RaisePropertyChanged(nameof(TemplateMessage));
             FileStream stream;
             try { stream = info.OpenRead(); }
             catch (Exception) 
             {
                 TemplateMessage = "Error: file in use";
-                OnPropertyChanged(() => TemplateMessage);
+                RaisePropertyChanged(nameof(TemplateMessage));
                 return; 
             }
             byte[] buf = new byte[stream.Length];
@@ -334,18 +334,18 @@ namespace Punfai.Report.Wpf.Designers
 
         private void raise()
         {
-            OnPropertyChanged(() => ReportName);
-            OnPropertyChanged(() => ReportDefinition);
-            OnPropertyChanged(() => Description);
-            OnPropertyChanged(() => ScriptingLanguage);
-            OnPropertyChanged(() => Parameters);
-            OnPropertyChanged(() => Dependencies);
-            OnPropertyChanged(() => Author);
-            OnPropertyChanged(() => TemplateFileName);
-            OnPropertyChanged(() => TemplateState);
-            OnPropertyChanged(() => Script);
-            OnPropertyChanged(() => SectionsCV);
-            OnPropertyChanged(() => TemplateText);
+            RaisePropertyChanged(nameof(ReportName));
+            RaisePropertyChanged(nameof(ReportDefinition));
+            RaisePropertyChanged(nameof(Description));
+            RaisePropertyChanged(nameof(ScriptingLanguage));
+            RaisePropertyChanged(nameof(Parameters));
+            RaisePropertyChanged(nameof(Dependencies));
+            RaisePropertyChanged(nameof(Author));
+            RaisePropertyChanged(nameof(TemplateFileName));
+            RaisePropertyChanged(nameof(TemplateState));
+            RaisePropertyChanged(nameof(Script));
+            RaisePropertyChanged(nameof(SectionsCV));
+            RaisePropertyChanged(nameof(TemplateText));
 
             SaveCommand.RaiseCanExecuteChanged();
         }
@@ -396,7 +396,7 @@ namespace Punfai.Report.Wpf.Designers
 
         void SectionsCV_CurrentChanged(object sender, EventArgs e)
         {
-            OnPropertyChanged(() => TemplateText);
+            RaisePropertyChanged(nameof(TemplateText));
         }
 
         void paramsCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

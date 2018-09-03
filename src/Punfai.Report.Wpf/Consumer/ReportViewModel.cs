@@ -103,8 +103,8 @@ namespace Punfai.Report.Wpf.Consumer
         {
             PageView = lazyPage.Value;
             HasLoaded = true;
-            OnPropertyChanged(() => HasLoaded);
-            OnPropertyChanged(() => PageView);
+            RaisePropertyChanged(nameof(HasLoaded));
+            RaisePropertyChanged(nameof(PageView));
         }
 
     }

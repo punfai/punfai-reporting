@@ -1,5 +1,5 @@
 
-$ver = "0.1.4"
+$ver = "0.1.8"
 $nuserver = "Z:\0005 IT\Software\nuget"
 Write-Host -ForegroundColor Cyan "Punfai.Report..."
 dotnet pack .\src\Punfai.Report --configuration Release
@@ -27,3 +27,4 @@ nuget pack .\src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj -properties Configur
 nuget delete Punfai.Report.Wpf $ver -source $nuserver -noninteractive
 nuget add .\Punfai.Report.Wpf.$ver.nupkg -source $nuserver
 Remove-Item .\Punfai.Report.Wpf.$ver.nupkg
+Remove-Item .\Punfai.Report.Wpf.$ver.symbols.nupkg

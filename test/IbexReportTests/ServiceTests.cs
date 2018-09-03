@@ -51,13 +51,13 @@ namespace IbexReportTests
             Dictionary<string, object> data = new Dictionary<string, object>();
             data["rows"] = rows;
 
-            string path = "PunReportTest_hello_service.pdf";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Reports", "PunReportTest_output.txt");
+            string path = "hello_service.pdf";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Reports", "PunReportTest_output.txt");
             FileStream output = new FileStream(path, FileMode.Create);
             var pdffile = await reportingService.GenerateReportAsync("Hello World", data, output);
             Assert.True(File.Exists(path));
         }
         [Fact]
-        public async Task Bad_template_gives_good_error()
+        public async Task Missing_template_gives_good_error()
         {
             IbexFoReportType foReportType = new IbexFoReportType(ibexRuntimeKey);
             var r1 = new ReportInfo("Hello World", foReportType.Name, PassThroughEngine.ScriptingLanguage);
@@ -89,7 +89,7 @@ namespace IbexReportTests
             Dictionary<string, object> data = new Dictionary<string, object>();
             data["rows"] = rows;
 
-            string path = "PunReportTest_hellooo_service.pdf";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Reports", "PunReportTest_output.txt");
+            string path = "Missing_hellooo_service.pdf";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Reports", "PunReportTest_output.txt");
             FileStream output = new FileStream(path, FileMode.Create);
             try
             {
@@ -99,6 +99,58 @@ namespace IbexReportTests
             {
                 Assert.True(true);
             }
+            finally { output.Close(); }
+        }
+        [Fact]
+        public async Task Bad_template_gives_good_error()
+        {
+            IbexFoReportType foReportType = new IbexFoReportType(ibexRuntimeKey);
+            var r1 = new ReportInfo("Hello World", foReportType.Name, PassThroughEngine.ScriptingLanguage);
+            r1.TemplateFileName = "IbexReportTests.bad.hello_world.fo";
+            var reports = new List<ReportInfo>();
+            reports.Add(r1);
+
+            ReportingService reportingService = await ReportingService.CreateAssemblyEmbedded(
+                new IReportType[] { foReportType }
+                , Assembly.GetExecutingAssembly()
+                , reports
+                );
+
+            List<Hobo> hobos = new List<Hobo>();
+            hobos.Add(new Hobo("Joey", "SlowMo", 17.55f));
+            hobos.Add(new Hobo("Harry M.", "Hottogo", 32f));
+            hobos.Add(new Hobo("P. Jr", "Moggato", 24.858358f));
+            List<object> rows = new List<object>(
+            hobos.Select(a =>
+            {
+                dynamic row = new ExpandoObject();
+                row.FirstName = a.FirstName;
+                row.Surname = a.Surname;
+                row.Age = a.Age;
+                row.DateOfBirth = a.DateOfBirth;
+                return row;
+            }));
+
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data["rows"] = rows;
+
+            string path = "Bad_hello_service.pdf";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),"Reports", "PunReportTest_output.txt");
+            FileStream output = new FileStream(path, FileMode.Create);
+            MemoryStream stdout = new MemoryStream();
+            string message = null;
+            try
+            {
+                var pdffile = await reportingService.GenerateReportAsync("Hello World", data, output, stdout);
+                stdout.Position = 0;
+                StreamReader r = new StreamReader(stdout);
+                message = r.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                Assert.True(true);
+                return;
+            }
+            Assert.True(message != null && message.Length > 0);
         }
     }
 }
