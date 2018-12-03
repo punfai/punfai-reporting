@@ -1,5 +1,5 @@
-
-$ver = "0.1.8"
+# watch the bug in VS where PackageVersion in the csproj file is not PackageVersion in the properties UI
+$ver = "0.1.9"
 $nuserver = "Z:\0005 IT\Software\nuget"
 Write-Host -ForegroundColor Cyan "Punfai.Report..."
 dotnet pack .\src\Punfai.Report --configuration Release

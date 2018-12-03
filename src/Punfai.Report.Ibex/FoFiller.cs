@@ -21,7 +21,7 @@ namespace Punfai.Report.Ibex
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
             // TODO: make this more asyncy
-            XmlWriter fowriter = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = UTF8Encoding.UTF8, Indent = true, Async = true });
+            XmlWriter fowriter = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = new UTF8Encoding(false), Indent = true, Async = true });
             // should only be one section
             bool ok = false;
             foreach (var section in t.SectionNames)

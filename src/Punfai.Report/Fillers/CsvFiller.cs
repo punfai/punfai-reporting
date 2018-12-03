@@ -33,7 +33,7 @@ namespace Punfai.Report.Fillers
             //      row 1: header (optional)
             //      row 2 (or 1 if no header): row template
             //    read IList<IDictionary<string, object>> stored in stuffing["rows"]
-            StreamWriter writer = new StreamWriter(output, UTF8Encoding.UTF8);
+            StreamWriter writer = new StreamWriter(output, new UTF8Encoding(false));
             foreach (var section in t.SectionNames)
             {
                 string fulltemplate = t.GetSectionText(section).Trim();
