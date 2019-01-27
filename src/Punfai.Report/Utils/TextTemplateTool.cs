@@ -74,6 +74,7 @@ namespace Punfai.Report.Utils
             string formatted;
             switch (options.DataType)
             {
+                case "s": formatted = formatString(svalue, options, errors); break;
                 case "a": formatted = formatAlpha(svalue, options, errors); break;
                 case "an": formatted = formatAlphaNum(svalue, options, errors); break;
                 case "n": formatted = formatNum(svalue, options, errors); break;
@@ -81,6 +82,10 @@ namespace Punfai.Report.Utils
                 default: formatted = svalue; break;
             }
             return applyFixedLength(formatted, options, errors);
+        }
+        private static string formatString(string svalue, FieldFormatOptions options, StringBuilder errors)
+        {
+            return svalue;
         }
         private static string formatAlpha(string svalue, FieldFormatOptions options, StringBuilder errors)
         {
@@ -200,7 +205,7 @@ namespace Punfai.Report.Utils
                     int f2 = formats[0].IndexOf(']', f1);
                     if (f2 == -1) f2 = formats[0].Length - 1;
                     dataType = formats[0].Substring(0, f1);
-                    dotnetFormatString = formats[0].Substring(f1+1, f2 - f1);
+                    dotnetFormatString = formats[0].Substring(f1+1, f2 - f1-1);
                 }
                 else
                 {

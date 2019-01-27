@@ -27,7 +27,7 @@ namespace PunReportTests
             {
                 dynamic row = new ExpandoObject();
                 row.FirstName = a.FirstName;
-                row.Age = a.Age.ToString("0");
+                row.Age = a.Age;
                 row.DateOfBirth = a.DateOfBirth;
                 return row;
             }));
@@ -66,7 +66,7 @@ namespace PunReportTests
             {
                 dynamic row = new ExpandoObject();
                 row.FirstName = a.FirstName;
-                row.Age = a.Age.ToString("0");
+                row.Age = a.Age;
                 row.DateOfBirth = a.DateOfBirth;
                 return row;
             }));
@@ -77,7 +77,7 @@ namespace PunReportTests
             data["rowsD"] = nofillRow;
             data["newLine"] = "\r\n";
             data["bom"] = false;
-            string path = "PunReportTest_output.txt";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Reports", "PunReportTest_output.txt");
+            string path = "PunReportTest_output_multi.txt";//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Reports", "PunReportTest_output.txt");
             FileStream output = new FileStream(path, FileMode.Create);
             TextFiller filler = new TextFiller();
             var filled = await filler.FillAsync(t, data, output);
@@ -87,7 +87,7 @@ namespace PunReportTests
 
         private byte[] createOneBlockPlainTextTemplateBytes()
         {
-            string block = "Name: {{FirstName:a,m,20}};Age: {{Age:n,o[0],5}}; DateOfBirth: {{DateOfBirth:dt[dd-MM-yy],o[0],8}};";
+            string block = "Name: {{FirstName:a,m,20}};Age: {{Age:n[0.0],o[0],5}}; DateOfBirth: {{DateOfBirth:dt[dd-MM-yy],o[0],8}};";
             UTF8Encoding utf8NoPreamble = new UTF8Encoding(false);
             return utf8NoPreamble.GetBytes(block);
         }
