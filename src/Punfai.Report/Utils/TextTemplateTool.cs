@@ -109,12 +109,16 @@ namespace Punfai.Report.Utils
         private static string formatNum(string svalue, FieldFormatOptions options, StringBuilder errors)
         {
             StringBuilder s = new StringBuilder();
-            foreach (char c in svalue)
+            decimal dval;
+            if (!decimal.TryParse(svalue, out dval))
             {
-                if (char.IsDigit(c))
-                    s.Append(c);
+                dval = 0;
+                errors.AppendLine($"Not a number: '{svalue}'");
             }
-            return s.ToString();
+            if (!string.IsNullOrEmpty(options.Format))
+                return dval.ToString(options.Format);
+            else
+                return dval.ToString();
         }
         private static string formatDate(string svalue, FieldFormatOptions options, StringBuilder errors)
         {
@@ -179,6 +183,7 @@ namespace Punfai.Report.Utils
             public string Format { get; set; }
             public char BlankFiller { get; set; }
             public int? FixedLength { get; set; }
+            public bool AlignLeft { get; set; }
         }
         private static FieldFormatOptions parseFormatting(string format, string fieldName)
         {
@@ -186,6 +191,7 @@ namespace Punfai.Report.Utils
             var formats = formats0.Select(a => a.Trim()).ToArray();
             string dataType;
             string dotnetFormatString;
+            bool alignLeft = true;
             if (formats.Length > 0)
             {
                 if (formats[0].Contains("["))
@@ -200,6 +206,17 @@ namespace Punfai.Report.Utils
                 {
                     dataType = formats[0];
                     dotnetFormatString = null;
+                }
+                // set alignment default
+                alignLeft = dataType.StartsWith("a");
+                // if alignment specified
+                var lastChar = dataType[dataType.Length - 1];
+                if (lastChar == 'r' || lastChar == 'l')
+                {
+                    if (lastChar == 'r') alignLeft = false;
+                    else if (lastChar == 'l') alignLeft = true;
+                    // remove the alignment option from the data type
+                    dataType = dataType.Substring(0, dataType.Length - 1);
                 }
             }
             else
