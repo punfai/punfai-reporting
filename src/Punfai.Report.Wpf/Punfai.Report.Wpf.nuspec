@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Trying out the nuget.</releaseNotes>
-    <copyright>Copyright 2018</copyright>
+    <copyright>Copyright 2019</copyright>
     <tags>Reporting WPF</tags>
     <dependencies>
       <dependency id="Punfai.Report" version="$version$" />
