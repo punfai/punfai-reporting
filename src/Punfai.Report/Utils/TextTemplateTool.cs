@@ -152,8 +152,7 @@ namespace Punfai.Report.Utils
                     return svalue;
                 }
                 StringBuilder s = new StringBuilder();
-                bool right = options.DataType == "n";
-                right = right || options.DataType.EndsWith("r");
+                bool right = !options.AlignLeft;
                 if (right)
                 {
                     // right aligned
@@ -213,7 +212,7 @@ namespace Punfai.Report.Utils
                     dotnetFormatString = null;
                 }
                 // set alignment default
-                alignLeft = dataType.StartsWith("a");
+                alignLeft = !dataType.StartsWith("n");
                 // if alignment specified
                 var lastChar = dataType[dataType.Length - 1];
                 if (lastChar == 'r' || lastChar == 'l')
@@ -226,7 +225,7 @@ namespace Punfai.Report.Utils
             }
             else
             {
-                dataType = "an";
+                dataType = "s";
                 dotnetFormatString = null;
             }
             bool required;
@@ -265,7 +264,8 @@ namespace Punfai.Report.Utils
                 Format = dotnetFormatString,
                 Required = required,
                 BlankFiller = blankFiller,
-                FixedLength = fixedLength
+                FixedLength = fixedLength,
+                AlignLeft = alignLeft
             };
             return options;
         }
