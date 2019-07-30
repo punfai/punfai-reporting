@@ -3,7 +3,7 @@
 # 2. change the version below
 # 3. change the version in pushPackage.ps1
 
-$ver = "0.2.3"
+$ver = "0.2.4"
 $nuserver = "https://www.myget.org/F/yummy-ag/api/v2/package"
 
 Write-Host -ForegroundColor Cyan "Punfai.Report..."

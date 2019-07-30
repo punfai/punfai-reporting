@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelTests.cs" />
     <Compile Include="WpfXamlTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +58,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\src\Punfai.Report.OfficeOpenXml\Punfai.Report.OfficeOpenXml.csproj">
+      <Project>{2eb70e45-de20-4c55-b600-f7cf069898a1}</Project>
+      <Name>Punfai.Report.OfficeOpenXml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj">
       <Project>{86e03be8-4840-4a3d-b2c1-ec3d8fb88325}</Project>
       <Name>Punfai.Report.Wpf</Name>

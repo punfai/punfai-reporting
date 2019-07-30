@@ -1,7 +1,7 @@
 # watch the bug in VS where PackageVersion in the csproj file is not PackageVersion in the properties UI
 # 1. update version in .csproj for netcore libs and AssemblyInfo.cs for framework libs
 # 2. change the version below
-$ver = "0.2.3"
+$ver = "0.2.4"
 $nuserver = "https://www.myget.org/F/yummy-ag/api/v2/package"
 
 Write-Host -ForegroundColor Cyan "Punfai.Report..."

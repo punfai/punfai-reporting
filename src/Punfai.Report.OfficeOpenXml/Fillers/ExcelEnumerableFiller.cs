@@ -42,12 +42,17 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
 
                 // number formats, date is a formatted number
                 //var numFmt = @"<numFmts count=""1""><numFmt numFmtId=""166"" formatCode=""[$-F800]dddd\,\ mmmm\ dd\,\ yyyy""/></numFmts>";
-                var numFmtDate = new NumberingFormat();
-                numFmtDate.NumberFormatId = 166;
-                numFmtDate.FormatCode = @"[$-F800]dddd\,\ mmmm\ dd\,\ yyyy";
-                stylesPart.Stylesheet.NumberingFormats = new NumberingFormats();
-                stylesPart.Stylesheet.NumberingFormats.Count = 1;
-                stylesPart.Stylesheet.NumberingFormats.AppendChild(numFmtDate);
+                //var numFmtDate = new NumberingFormat();
+                //numFmtDate.NumberFormatId = 166;
+                //numFmtDate.FormatCode = @"[$-F800]dddd\,\ mmmm\ dd\,\ yyyy";
+                //numFmtDate.NumberFormatId = 14;
+                //numFmtDate.FormatCode = "d/m/yyyy";
+                //var numFmtTime = new NumberingFormat();
+                //numFmtTime.NumberFormatId = 19;
+                //stylesPart.Stylesheet.NumberingFormats = new NumberingFormats();
+                //stylesPart.Stylesheet.NumberingFormats.Count = 1;
+                //stylesPart.Stylesheet.NumberingFormats.AppendChild(numFmtDate);
+                //stylesPart.Stylesheet.NumberingFormats.AppendChild(numFmtTime);
 
                 // blank font list
                 stylesPart.Stylesheet.Fonts = new Fonts();
@@ -82,7 +87,10 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
                 // empty one for index 0, seems to be required
                 stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat());
                 // cell format index 1 applies the date format
-                stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 0, NumberFormatId = 166, ApplyNumberFormat = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Center });
+                stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 0, NumberFormatId = 14, ApplyNumberFormat = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Right });
+                stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 0, NumberFormatId = 19, ApplyNumberFormat = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Right });
+                stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 0, NumberFormatId = 3, ApplyNumberFormat = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Right });
+                stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 0, NumberFormatId = 4, ApplyNumberFormat = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Right });
                 //stylesPart.Stylesheet.CellFormats.AppendChild(new CellFormat { FormatId = 0, FontId = 0, BorderId = 0, FillId = 2, ApplyFill = true }).AppendChild(new Alignment { Horizontal = HorizontalAlignmentValues.Center });
                 stylesPart.Stylesheet.CellFormats.Count = 2;
 
@@ -127,8 +135,21 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
                             c = CreateEmptyCell();
                         else if (cellObj is string)
                             c = CreateSharedStringCell((string)cellObj, sharedStringPart);
-                        else if (cellObj is DateTime)
-                            c = CreateDateTimeCell((DateTime)cellObj);
+                        else if (cellObj is DateTime dt)
+                        {
+                            if (dt == dt.Date)
+                                c = CreateDateCell(dt);
+                            else
+                                c = CreateTimeCell(dt);
+                        }
+                        else if (cellObj is int i)
+                            c = CreateIntCell(i);
+                        else if (cellObj is decimal)
+                            c = CreateDecimalCell(cellObj);
+                        else if (cellObj is float)
+                            c = CreateDecimalCell(cellObj);
+                        else if (cellObj is double)
+                            c = CreateDecimalCell(cellObj);
                         else if (cellObj.GetType().GetTypeInfo().IsValueType)
                             c = CreateValueCell(cellObj);
                         else
@@ -174,7 +195,25 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
             cell.Append(cv);
             return cell;
         }
-        private static Cell CreateDateTimeCell(DateTime d)
+        private static Cell CreateDecimalCell(object obj)
+        {
+            Cell cell = new Cell();
+            CellValue cv = new CellValue();
+            cv.Text = obj.ToString();
+            cell.StyleIndex = 4; // decimal style
+            cell.Append(cv);
+            return cell;
+        }
+        private static Cell CreateIntCell(int i)
+        {
+            Cell cell = new Cell();
+            CellValue cv = new CellValue();
+            cv.Text = i.ToString();
+            cell.StyleIndex = 3; // int style
+            cell.Append(cv);
+            return cell;
+        }
+        private static Cell CreateDateCell(DateTime d)
         {
             Cell cell = new Cell();
             CellValue cv = new CellValue();
@@ -183,10 +222,19 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
             cell.Append(cv);
             return cell;
         }
+        private static Cell CreateTimeCell(DateTime d)
+        {
+            Cell cell = new Cell();
+            CellValue cv = new CellValue();
+            cv.Text = ToOADate(d).ToString();
+            cell.StyleIndex = 2; // time style
+            cell.Append(cv);
+            return cell;
+        }
 
         private static double ToOADate(DateTime d)
         {
-            var span = d - new DateTime(1899, 11, 30);
+            var span = d - new DateTime(1899, 12, 30);
             return span.TotalDays;
         }
     }
