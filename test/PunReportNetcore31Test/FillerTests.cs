@@ -7,7 +7,7 @@ using Xunit;
 using System.Dynamic;
 using System.IO;
 using System.Reflection;
-using Punfai.Report.Ibex.Netcore;
+using Punfai.Report.Ibex;
 
 namespace PunReportNetcore31Test
 {

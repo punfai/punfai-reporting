@@ -31,14 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Printing" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -111,10 +109,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj">
-      <Project>{f245cabe-5e8e-4898-916d-4f2711697b02}</Project>
-      <Name>Punfai.Report.Ibex</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Punfai.Report.IronScript\Punfai.Report.IronScript.csproj">
       <Project>{e399b76e-3ece-4e3a-ba14-aec7b89b6f73}</Project>
       <Name>Punfai.Report.IronScript</Name>

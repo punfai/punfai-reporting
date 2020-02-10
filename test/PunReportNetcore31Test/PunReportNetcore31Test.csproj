@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Punfai.Report.Ibex.Netcore\Punfai.Report.Ibex.Netcore.csproj" />
+    <ProjectReference Include="..\..\src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj" />
     <ProjectReference Include="..\..\src\Punfai.Report.OfficeOpenXml\Punfai.Report.OfficeOpenXml.csproj" />
   </ItemGroup>
 

@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
-using System.Reflection;
 using System.Xml;
-using System.Xml.Linq;
-using Punfai.Report.Utils;
 using System.Threading.Tasks;
 using System.Xml.Xsl;
-using System.Xml.XPath;
 
 namespace Punfai.Report.Ibex
 {

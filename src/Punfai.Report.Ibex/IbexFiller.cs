@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Reflection;
-using System.Xml;
-using System.Xml.Linq;
-using Punfai.Report.Utils;
 using System.Threading.Tasks;
+#if NETCOREAPP
+using xmlpdf = ibex4;
+using ibex4;
+using ibex4.logging;
+#else
 using xmlpdf.logging;
 using xslfo;
+#endif
 
 namespace Punfai.Report.Ibex
 {
@@ -39,12 +39,15 @@ namespace Punfai.Report.Ibex
                 LastError = foFiller.LastError;
                 return false;
             }
-            //xmlpdf.licensing.Generator.LicenseFileLocation = LIC_XMLPDFLicense;
-            //xmlpdf.licensing.Generator.LicenseFileLocation = licPath;
             xmlpdf.licensing.Generator.setRuntimeKey(ibexRuntimeKey);
             FODocument doc = new FODocument();
             string appPath = Directory.GetCurrentDirectory() + Path.PathSeparator;
+#if NETFRAMEWORK
             doc.setBaseURI(appPath);
+#else
+            doc.setBaseURI_XML(appPath);
+            doc.setBaseURI_XSL(appPath);
+            #endif
             MemoryStream memstream = new MemoryStream();
             StreamReader r = new StreamReader(memstream);
             var logger = xmlpdf.logging.Logger.getLogger();
@@ -59,7 +62,6 @@ namespace Punfai.Report.Ibex
             }
             catch (Exception ex)
             {
-                //logger.Error(this.GetType().FullName + ".Transform", "problem generating pdf", ex);
                 LastError = ex.Message;
                 return false;
             }
