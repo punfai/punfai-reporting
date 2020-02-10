@@ -18,7 +18,8 @@ namespace Punfai.Report.Wpf
             // this project, this project's assembly and the assembly A get copied to the project's bin directory, but not
             // assembly B. So in order to get the required assembly B copied over, we add some dummy code here (that never
             // gets called) that references assembly B; this will flag VS/MSBuild to copy the required assembly B over as well.
-            var dummyType1 = typeof(Microsoft.Expression.Interactivity.Core.ExtendedVisualStateManager);
+            //var dummyType1 = typeof(Microsoft.Expression.Interactivity.Core.ExtendedVisualStateManager);
+            var dummyType1 = typeof(Microsoft.Xaml.Behaviors.Core.ExtendedVisualStateManager);
         }
     }
 }

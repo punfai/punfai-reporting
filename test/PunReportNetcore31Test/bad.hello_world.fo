@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="page-layout">
+      <fo:region-body margin="1cm" background-color="#ddddff" region-name="body"/>
+    </fo:simple-page-master>
+  </fo:layout-master-set>
+
+  <fo:page-sequence master-reference="page-layout">
+    <fo:flow flow-name="body">
+      <fo:block>
+        One
+      </fo:block>
+      <fo:block gobledee-gooky-attribute="I'm not bad">
+        Two
+      </fo:block>
+      <fo:bloock gobledee-gooky-attribute="I'm bad">
+        Two
+      </fo:bloock>
+      <fo:block mesh-repeat="person in rows">{{person.Surname}}, {{person.FirstName}} DOB:{{person.DateOfBirth}}, Age:{{person.Age}}</fo:block>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

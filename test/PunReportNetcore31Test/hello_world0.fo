@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="http://www.w3.org/1999/XSL/Format">
+  <layout-master-set>
+    <simple-page-master master-name="page-layout">
+      <region-body region-name="body" margin="2.5cm" background-color="#dddddd"/>
+    </simple-page-master>
+  </layout-master-set>
+
+  <page-sequence master-reference="page-layout">
+    <flow flow-name="body">
+      <block>
+        One
+      </block>
+      <block>
+        Two
+      </block>
+      <block>
+        Three
+      </block>
+    </flow>
+  </page-sequence>
+</root>
