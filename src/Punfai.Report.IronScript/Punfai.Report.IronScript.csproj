@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DebugType>portable</DebugType>
     <AssemblyName>Punfai.Report.IronScript</AssemblyName>
     <PackageId>Punfai.Report.IronScript</PackageId>
@@ -9,14 +9,14 @@
     <Description>Generate reports with IronPython script</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>First release</PackageReleaseNotes>
-    <Copyright>Copyright 2018 (c) Punfai. All rights reserved.</Copyright>
+    <Copyright>Copyright 2020 (c) Punfai. All rights reserved.</Copyright>
     <PackageTags>reporting reports</PackageTags>
     <FileVersion>0.2.4.0</FileVersion>
     <Version>0.2.4</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="IronPython" Version="2.7.9" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="IronPython" Version="2.7.10-candidate1" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj" />

@@ -9,24 +9,21 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
-    <Reference Include="ibex11, Version=1.8.7.0, Culture=neutral, PublicKeyToken=bd32d4f9ec352863">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\ibex11.DLL</HintPath>
+    <Reference Include="ibex40">
+      <HintPath>lib\ibex40.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <PackageReference Include="Ibex.PDF.Creator.Core" Version="4.11.32" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="template.xslt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="template.fo" />
-    <None Include="lib\ibex11.DLL" />
-    <None Include="xmlpdf.lic" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj"/>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <PackageReference Include="Ibex.PDF.Creator.Core" Version="4.11.23" />
+    <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Punfai.Report.Ibex.nuspec">

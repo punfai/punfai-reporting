@@ -11,7 +11,6 @@ using System.Dynamic;
 using System.IO;
 using System.Reflection;
 using Punfai.Report;
-using Punfai.Report.Wpf.ReportTypes;
 using Punfai.Report.OfficeOpenXml.ReportTypes;
 
 namespace PunReportNet47Test

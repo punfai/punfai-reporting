@@ -16,7 +16,6 @@ using System.Windows.Xps.Packaging;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Punfai.Report;
-using Punfai.Report.Wpf.Utils;
 using Punfai.Report.Interfaces;
 
 namespace Punfai.Report.Wpf.Services

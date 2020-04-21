@@ -7,22 +7,25 @@ using xmlpdf = ibex4;
 using ibex4;
 using ibex4.logging;
 #else
-using xmlpdf.logging;
-using xslfo;
+using xmlpdf = ibex4;
+using ibex4;
+using ibex4.logging;
 #endif
 
 namespace Punfai.Report.Ibex
 {
     public class IbexFiller : IReportFiller
     {
-        public const string LIC_XMLPDFLicense = "Punfai.Report.Ibex.xmlpdf.lic";
-        private readonly string ibexRuntimeKey;
+        private static string ibexRuntimeKey;
+        public static void SetIbexRuntimeKey(string key)
+        {
+            ibexRuntimeKey = key;
+        }
 
         IReportFiller foFiller;
-        public IbexFiller(IReportFiller foFiller, string ibexRuntimeKey)
+        public IbexFiller(IReportFiller foFiller)
         {
             this.foFiller = foFiller;
-            this.ibexRuntimeKey = ibexRuntimeKey;
         }
         public Type[] SupportedReports { get { return new[] { typeof(IbexFoReportType), typeof(IbexXslReportType) }; } }
 
@@ -42,12 +45,8 @@ namespace Punfai.Report.Ibex
             xmlpdf.licensing.Generator.setRuntimeKey(ibexRuntimeKey);
             FODocument doc = new FODocument();
             string appPath = Directory.GetCurrentDirectory() + Path.PathSeparator;
-#if NETFRAMEWORK
-            doc.setBaseURI(appPath);
-#else
             doc.setBaseURI_XML(appPath);
             doc.setBaseURI_XSL(appPath);
-            #endif
             MemoryStream memstream = new MemoryStream();
             StreamReader r = new StreamReader(memstream);
             var logger = xmlpdf.logging.Logger.getLogger();

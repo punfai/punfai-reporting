@@ -83,7 +83,7 @@ namespace Punfai.Report
             var t = rt.CreateTemplate(templateBytes);
 
             ok = await FillReportAsync(t, rt, stuffing, output);
-
+            output.Dispose();
             if (ok)
                 return outputPath;
             else
@@ -109,6 +109,7 @@ namespace Punfai.Report
             var t = rt.CreateTemplate(templateBytes);
 
             ok = await FillReportAsync(t, rt, stuffing, output);
+            output.Dispose();
 
             if (ok)
                 return outputPath;

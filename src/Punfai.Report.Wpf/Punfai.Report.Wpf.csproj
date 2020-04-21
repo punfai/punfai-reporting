@@ -49,7 +49,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.1.19</Version>
     </PackageReference>
-    <PackageReference Include="Prism.Core" Version="7.0.0.396" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -80,7 +80,6 @@
     <Compile Include="Services\PrintService.cs" />
     <Compile Include="Services\ReportDesignerService.cs" />
     <Compile Include="Services\WpfReportingService.cs" />
-    <Compile Include="Utils\OfficeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Assets\Drawings.xaml">
@@ -109,14 +108,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Punfai.Report.IronScript\Punfai.Report.IronScript.csproj">
-      <Project>{e399b76e-3ece-4e3a-ba14-aec7b89b6f73}</Project>
-      <Name>Punfai.Report.IronScript</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Punfai.Report.OfficeOpenXml\Punfai.Report.OfficeOpenXml.csproj">
-      <Project>{2eb70e45-de20-4c55-b600-f7cf069898a1}</Project>
-      <Name>Punfai.Report.OfficeOpenXml</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj">
       <Project>{35C97AFB-07F1-4502-87D2-A8D2D5528F9F}</Project>
       <Name>Punfai.Report</Name>

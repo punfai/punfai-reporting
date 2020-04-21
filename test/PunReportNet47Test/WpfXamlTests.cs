@@ -11,7 +11,6 @@ using System.Dynamic;
 using System.IO;
 using System.Reflection;
 using Punfai.Report;
-using Punfai.Report.Wpf.ReportTypes;
 
 namespace PunReportNet47Test
 {
@@ -20,7 +19,7 @@ namespace PunReportNet47Test
         [Fact]
         public async Task Service_works_with_embedded_repo()
         {
-            WpfXamlReportType xamlReportType = new WpfXamlReportType();
+            XmlReportType xamlReportType = new XmlReportType();
             var r1 = new ReportInfo("Hello World", xamlReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "PunReportNet47Test.flow.hello_world.xml";
             var reports = new List<ReportInfo>();
@@ -63,7 +62,7 @@ namespace PunReportNet47Test
         [Fact]
         public async Task Missing_template_gives_good_error()
         {
-            WpfXamlReportType xamlReportType = new WpfXamlReportType();
+            XmlReportType xamlReportType = new XmlReportType();
             var r1 = new ReportInfo("Hello World", xamlReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "Cant_Find_Me.flow.hello_world.xml";
             var reports = new List<ReportInfo>();
@@ -95,7 +94,7 @@ namespace PunReportNet47Test
         [Fact]
         public async Task Bad_template_gives_good_error()
         {
-            WpfXamlReportType xamlReportType = new WpfXamlReportType();
+            XmlReportType xamlReportType = new XmlReportType();
             var r1 = new ReportInfo("Hello World", xamlReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "PunReportNet47Test.badflow.hello_world.xml";
             var reports = new List<ReportInfo>();

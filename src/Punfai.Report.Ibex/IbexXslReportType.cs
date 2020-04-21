@@ -7,10 +7,10 @@ namespace Punfai.Report.Ibex
 {
     public class IbexXslReportType : IReportType
     {
-        public IbexXslReportType(string ibexRuntimeKey)
+        public IbexXslReportType()
         {
             var foFiller = new XslFoFiller();
-            this.Filler = new IbexFiller(foFiller, ibexRuntimeKey);
+            this.Filler = new IbexFiller(foFiller);
         }
 
         public string Name { get { return "Ibex XslFo PDF"; } }

@@ -6,7 +6,7 @@ using System.IO;
 using Punfai.Report.Interfaces;
 using System.Threading.Tasks;
 
-namespace Punfai.Report.Wpf.Services
+namespace Punfai.Report.Wpf
 {
     /// <summary>
     /// Not sure why there is a IReportingService, it might be a good guide for tying everything together.

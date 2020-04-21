@@ -111,8 +111,9 @@ namespace Punfai.Report.Fillers
 
             }
             // the caller owns the stream, they have to close it.
-            // so don't go using() or closing the streamwriter
+            // so don't go using() or closing the streamwriter - why the hell not?
             await writer.FlushAsync();
+            writer.Close();
             LastError = errors.ToString();
             return true;
         }

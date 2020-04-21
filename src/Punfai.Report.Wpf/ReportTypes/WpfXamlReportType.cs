@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using Punfai.Report.Fillers;
 using Punfai.Report.Template;
 
-namespace Punfai.Report.Wpf.ReportTypes
+namespace Punfai.Report.Wpf
 {
     public class WpfXamlReportType : IReportType
     {
