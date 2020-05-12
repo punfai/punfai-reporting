@@ -68,7 +68,7 @@ namespace Punfai.Report
         #endregion
 
         #region do everything: generate
-        public async Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null)
+        public async Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
         {
             if (output == null) throw new ArgumentNullException("output");
             bool ok;
@@ -83,13 +83,21 @@ namespace Punfai.Report
             var t = rt.CreateTemplate(templateBytes);
 
             ok = await FillReportAsync(t, rt, stuffing, output);
-            output.Dispose();
+            if (closeStream)
+            {
+                try
+                {
+                    output.Close();
+                    output.Dispose();
+                }
+                catch (Exception) { }
+            }
             if (ok)
                 return outputPath;
             else
                 return "Generation failed.";
         }
-        public async Task<string> GenerateReportAsync(string reportName, IDictionary<string,object> inputParams, Stream output, Stream stdout = null)
+        public async Task<string> GenerateReportAsync(string reportName, IDictionary<string,object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
             if (output == null) throw new ArgumentNullException("output");
             bool ok;
@@ -109,7 +117,15 @@ namespace Punfai.Report
             var t = rt.CreateTemplate(templateBytes);
 
             ok = await FillReportAsync(t, rt, stuffing, output);
-            output.Dispose();
+            if (closeStream)
+            {
+                try
+                {
+                    output.Close();
+                    output.Dispose();
+                }
+                catch (Exception ex) { }
+            }
 
             if (ok)
                 return outputPath;
@@ -125,14 +141,14 @@ namespace Punfai.Report
             }
         }
 
-        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null)
+        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
             foreach (var pair in inputParams)
             {
                 dic[pair.Item1] = pair.Item2;
             }
-            return GenerateReportAsync(reportName, dic, output, stdout);
+            return GenerateReportAsync(reportName, dic, output, stdout, closeStream);
         }
 
         #endregion

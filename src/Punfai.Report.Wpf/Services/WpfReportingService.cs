@@ -27,7 +27,7 @@ namespace Punfai.Report.Wpf
             this.baseService = baseService;
         }
 
-        public async Task<Dictionary<string, dynamic>> GenerateReportAsync(ReportInfo report, string outputFolder, Stream stdout = null)
+        public async Task<Dictionary<string, dynamic>> GenerateReportAsync(ReportInfo report, string outputFolder, Stream stdout = null, bool closeStream = true)
         {
             var stuffing = await RunScriptAsync(report, stdout);
             await WriteReportsAsync(report, stuffing, outputFolder, stdout);
@@ -231,9 +231,9 @@ namespace Punfai.Report.Wpf
             return baseService.GetReportType(reportTypeName);
         }
 
-        public Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null)
+        public Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
         {
-            return baseService.GenerateReportAsync(report, output, stdout);
+            return baseService.GenerateReportAsync(report, output, stdout, closeStream);
         }
         public Task<Dictionary<string, dynamic>> RunScriptAsync(string scriptLanguage, IEnumerable<InputParameter> parameters, string script, Stream stdout = null)
         {
@@ -250,14 +250,14 @@ namespace Punfai.Report.Wpf
             return baseService.FillReportAsync(t, rt, stuffing, output);
         }
 
-        public Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null)
+        public Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
-            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout);
+            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout, closeStream);
         }
 
-        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null)
+        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
-            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout);
+            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout, closeStream);
         }
         #endregion
 

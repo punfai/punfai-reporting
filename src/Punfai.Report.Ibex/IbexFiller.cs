@@ -67,7 +67,6 @@ namespace Punfai.Report.Ibex
             finally
             {
                 fostream.Close();
-                output.Close();
             }
             memstream.Position = 0;
             var message = r.ReadToEnd();

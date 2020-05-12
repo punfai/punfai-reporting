@@ -13,6 +13,13 @@ namespace Punfai.Report
     public interface IReportFiller
     {
         Type[] SupportedReports { get; }
+        /// <summary>
+        /// It's not your job to close the output stream OK?!
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="stuffing"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
         Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output);
         string LastError { get; }
     }
