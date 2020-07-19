@@ -7,6 +7,8 @@ using Punfai.Report.Utils;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Punfai.Report.ReportTypes;
+using System.Collections;
+using System.Data;
 
 namespace Punfai.Report.Fillers
 {
@@ -40,17 +42,12 @@ namespace Punfai.Report.Fillers
                 if (string.IsNullOrEmpty(fulltemplate))
                 {
                     // 1. 
-                    dynamic rows = stuffing.Values.FirstOrDefault(a => a is IList<object>);
+                    dynamic rows = stuffing.Values.FirstOrDefault();
+                    //dynamic rows = stuffing.Values.FirstOrDefault(a => a is IList<object>);
                     if (rows == null) continue;
-                    foreach (var row in rows)
+                    try
                     {
-                        var list = row as IList<object>;
-                        if (list == null) 
-                        {
-                            // row is some kind of object. Pretend the coder gave us a string representaion of the whole row.
-                            await writer.WriteLineAsync(row.ToString());
-                        }
-                        else
+                        foreach (dynamic row in rows)
                         {
                             // row is a list of items, CS them!
                             StringBuilder s = new StringBuilder();
@@ -60,6 +57,12 @@ namespace Punfai.Report.Fillers
                             }
                             await writer.WriteLineAsync(s.ToString());
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("untemplated csv error. is there an enumerable entry in the dictionary?");
+                        Debug.WriteLine(ex.Message);
+                        continue;
                     }
                 }
                 else

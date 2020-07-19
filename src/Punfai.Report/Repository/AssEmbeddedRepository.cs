@@ -58,6 +58,13 @@ namespace Punfai.Report
             var r = reports.FirstOrDefault(a => a.ID == id);
             if (r == null) throw new Exception($"Report not found, id={id}");
             var resourcePath = r.TemplateFileName;
+            if (resourcePath == null)
+            {
+                return Task.FromResult(new byte[] { });
+                //var rtype = reportTypes.First(a => a.Name == r.ReportType);
+                //if (rtype.GetDefaultTemplate(out byte[] defaultTemplate))
+                //    return Task.FromResult(defaultTemplate);
+            }
             Stream templateStream;
             try
             {
