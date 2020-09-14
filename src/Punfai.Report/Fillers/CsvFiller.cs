@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Punfai.Report.ReportTypes;
+using Punfai.Report.Template;
+using Punfai.Report.Utils;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
-using Punfai.Report.Utils;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using Punfai.Report.ReportTypes;
-using System.Collections;
-using System.Data;
 
 namespace Punfai.Report.Fillers
 {
@@ -35,6 +34,7 @@ namespace Punfai.Report.Fillers
             //      row 1: header (optional)
             //      row 2 (or 1 if no header): row template
             //    read IList<IDictionary<string, object>> stored in stuffing["rows"]
+            if (t == null) t = new PlainTextTemplate(new byte[] { });
             StreamWriter writer = new StreamWriter(output, new UTF8Encoding(false));
             foreach (var section in t.SectionNames)
             {

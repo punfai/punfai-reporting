@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Punfai.Report.Interfaces;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Punfai.Report.Wpf
@@ -171,7 +169,8 @@ namespace Punfai.Report.Wpf
                 ParentDir = ParentDir.Replace("%Desktop%", System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
 
             string TargetDir;
-            if (subfolder != null) {
+            if (subfolder != null)
+            {
                 TargetDir = Path.Combine(ParentDir, safeFolder(subfolder));
             }
             else TargetDir = ParentDir;

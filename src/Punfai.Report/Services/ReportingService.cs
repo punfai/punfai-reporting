@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Punfai.Report.Interfaces;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Reflection;
-using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace Punfai.Report
 {
@@ -97,7 +94,7 @@ namespace Punfai.Report
             else
                 return "Generation failed.";
         }
-        public async Task<string> GenerateReportAsync(string reportName, IDictionary<string,object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
+        public async Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
             if (output == null) throw new ArgumentNullException("output");
             bool ok;
@@ -156,8 +153,8 @@ namespace Punfai.Report
         #region static helpers
         public static async Task<ReportingService> CreateAssemblyEmbedded(
             IEnumerable<IReportType> reportTypes
-            ,Assembly assembly
-            ,IEnumerable<ReportInfo> reports)
+            , Assembly assembly
+            , IEnumerable<ReportInfo> reports)
         {
             AssEmbeddedRepository reprepo = new AssEmbeddedRepository(assembly, reportTypes);
             foreach (var r in reports)

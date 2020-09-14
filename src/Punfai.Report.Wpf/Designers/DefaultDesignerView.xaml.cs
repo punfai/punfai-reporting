@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Controls;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
+using System.Windows.Controls;
 
 namespace Punfai.Report.Wpf.Designers
 {
@@ -14,8 +14,8 @@ namespace Punfai.Report.Wpf.Designers
 
         private void TextBlock_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-        	var t = sender as TextBlock;
-			System.Windows.Clipboard.SetText(t.Text);
+            var t = sender as TextBlock;
+            System.Windows.Clipboard.SetText(t.Text);
         }
 
         private void ChooseTemplateButton_Click(object sender, System.Windows.RoutedEventArgs e)

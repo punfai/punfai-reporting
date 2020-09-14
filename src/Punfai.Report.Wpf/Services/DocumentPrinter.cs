@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.IO.Packaging;
-using System.Windows.Xps;
+﻿using Punfai.Report.Interfaces;
+using System;
 using System.Printing;
-using System.Reflection;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Xml.Xsl;
-using System.Windows.Documents;
 using System.Windows;
-using System.Windows.Xps.Packaging;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Punfai.Report;
-using Punfai.Report.Interfaces;
+using System.Windows.Documents;
 
 namespace Punfai.Report.Wpf.Services
 {
@@ -225,7 +212,7 @@ namespace Punfai.Report.Wpf.Services
     //            {
     //                if (Settings.ToString().Contains("landscape")) { p.PageSetup.Orientation = WdOrientation.wdOrientLandscape; }
     //            }
-                
+
     //            p.PrintOut();
     //            p.Close();
     //            app.Quit();

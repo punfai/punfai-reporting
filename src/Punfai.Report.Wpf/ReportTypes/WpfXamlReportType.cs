@@ -1,14 +1,6 @@
-﻿using Punfai.Report.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Text.RegularExpressions;
-using Punfai.Report.Fillers;
+﻿using Punfai.Report.Fillers;
 using Punfai.Report.Template;
+using System.Text;
 
 namespace Punfai.Report.Wpf
 {

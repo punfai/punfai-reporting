@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Punfai.Report
 {
-    public interface ITemplate: IChangeTracking
+    public interface ITemplate : IChangeTracking
     {
         IEnumerable<string> SectionNames { get; }
         byte[] GetTemplateBytes();

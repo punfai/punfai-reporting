@@ -1,18 +1,11 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
-
-using Prism.Mvvm;
 using Prism.Commands;
-
-using Punfai.Report;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Punfai.Report.Wpf.Services;
+using System.Windows.Data;
 
 namespace Punfai.Report.Wpf.Consumer
 {
@@ -55,7 +48,7 @@ namespace Punfai.Report.Wpf.Consumer
 
         public string[] Role
         {
-            get { return new [] { "" }; }
+            get { return new[] { "" }; }
         }
 
         public int Order

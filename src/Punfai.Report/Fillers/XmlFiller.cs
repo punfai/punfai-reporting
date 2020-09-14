@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Punfai.Report.ReportTypes;
+using Punfai.Report.Utils;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using Punfai.Report.Utils;
-using System.Threading.Tasks;
-using Punfai.Report.ReportTypes;
 
 namespace Punfai.Report.Fillers
 {

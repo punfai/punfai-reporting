@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Punfai.Report.Utils
@@ -35,7 +33,7 @@ namespace Punfai.Report.Utils
             {
                 // a) This is where the actual placeholder replacement happens!
                 var holders = element.DescendantNodes().OfType<XText>().Where(n => n.Value.Contains(placeHolder));
-                foreach(var t in holders)
+                foreach (var t in holders)
                 {
                     //News.AddDebug("text node match: {1}::{0}", t.Value, t.Parent.Name);
                     StringBuilder s = new StringBuilder(t.Value);
@@ -85,7 +83,7 @@ namespace Punfai.Report.Utils
                         string indexerkey = string.Format("{0}[{1}]", key, i);
                         ReplaceKey(element, indexerkey, dvalue[i]);
                         // if no alias was specified, let em omit the item dot prefix
-                        if (key == DefaultItemAlias) ReplaceKey(element, "["+i.ToString() + "]", dvalue[i]);
+                        if (key == DefaultItemAlias) ReplaceKey(element, "[" + i.ToString() + "]", dvalue[i]);
                     }
                 }
                 // ii. recursive

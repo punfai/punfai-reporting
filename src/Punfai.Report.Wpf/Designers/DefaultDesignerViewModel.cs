@@ -1,17 +1,10 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-
-using Prism.Mvvm;
 using Prism.Commands;
-
-using Punfai.Report;
-using Punfai.Report.Interfaces;
-using Punfai.Report.Wpf.Services;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Data;
 
 namespace Punfai.Report.Wpf.Designers
 {
@@ -73,7 +66,7 @@ namespace Punfai.Report.Wpf.Designers
         public CollectionView SectionsCV { get; private set; }
         public IEnumerable<string> SectionNames { get { if (Template != null) return Template.SectionNames; else return null; } }
         private string _templateText;
-        public string TemplateText 
+        public string TemplateText
         {
             get
             {
@@ -255,11 +248,11 @@ namespace Punfai.Report.Wpf.Designers
             RaisePropertyChanged(nameof(TemplateMessage));
             FileStream stream;
             try { stream = info.OpenRead(); }
-            catch (Exception) 
+            catch (Exception)
             {
                 TemplateMessage = "Error: file in use";
                 RaisePropertyChanged(nameof(TemplateMessage));
-                return; 
+                return;
             }
             byte[] buf = new byte[stream.Length];
             int x = await stream.ReadAsync(buf, 0, buf.Length);

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Punfai.Report.Utils
 {
@@ -204,7 +201,7 @@ namespace Punfai.Report.Utils
                     int f2 = formats[0].IndexOf(']', f1);
                     if (f2 == -1) f2 = formats[0].Length - 1;
                     dataType = formats[0].Substring(0, f1);
-                    dotnetFormatString = formats[0].Substring(f1+1, f2 - f1-1);
+                    dotnetFormatString = formats[0].Substring(f1 + 1, f2 - f1 - 1);
                 }
                 else
                 {

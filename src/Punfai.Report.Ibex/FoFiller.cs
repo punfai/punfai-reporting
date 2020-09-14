@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Punfai.Report.Utils;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using Punfai.Report.Utils;
-using System.Threading.Tasks;
 
 namespace Punfai.Report.Ibex
 {

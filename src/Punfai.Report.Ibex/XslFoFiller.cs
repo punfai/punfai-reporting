@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Xml;
+using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Xsl;
 
 namespace Punfai.Report.Ibex
@@ -15,13 +15,13 @@ namespace Punfai.Report.Ibex
 
         private XslCompiledTransform transform;
         private XsltArgumentList xal;
-		private Encoding encoding;
+        private Encoding encoding;
 
-		public XslFoFiller()
-		{
+        public XslFoFiller()
+        {
             transform = new XslCompiledTransform();
             xal = new XsltArgumentList();
-			//xal.AddExtensionObject("http://mesh/xsltools", new Mesh.Reporting.XSLTools());
+            //xal.AddExtensionObject("http://mesh/xsltools", new Mesh.Reporting.XSLTools());
         }
 
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)

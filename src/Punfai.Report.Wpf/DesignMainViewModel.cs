@@ -1,15 +1,11 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Prism.Mvvm;
 using Prism.Commands;
-using Punfai.Report.Interfaces;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
 
 
 namespace Punfai.Report.Wpf

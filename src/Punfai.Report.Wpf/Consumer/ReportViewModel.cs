@@ -1,16 +1,7 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
-
-using System.Text;
-using System.IO;
-using Punfai.Report.Wpf;
-
-using Prism.Mvvm;
 using Prism.Commands;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
 
 namespace Punfai.Report.Wpf.Consumer
 {

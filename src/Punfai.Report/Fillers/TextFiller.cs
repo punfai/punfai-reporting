@@ -1,17 +1,12 @@
-﻿using System;
+﻿using Punfai.Report.ReportTypes;
+using Punfai.Report.Utils;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Reflection;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using Punfai.Report.Interfaces;
-using Punfai.Report.Utils;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using Punfai.Report.ReportTypes;
 
 namespace Punfai.Report.Fillers
 {
@@ -52,7 +47,7 @@ namespace Punfai.Report.Fillers
                     foreach (var row in rows)
                     {
                         var list = row as IList<object>;
-                        if (list == null) 
+                        if (list == null)
                         {
                             // row is some kind of object. Pretend the coder gave us a string representaion of the whole row.
                             await writer.WriteAsync(row.ToString());
@@ -87,7 +82,7 @@ namespace Punfai.Report.Fillers
                         return false;
                     }
                     // loop over blocks
-                    for (int i=0; i < linesClean.Count; i++)
+                    for (int i = 0; i < linesClean.Count; i++)
                     {
                         dynamic rows = stuffing[blockkeys[i]];
                         foreach (dynamic row in rows)
