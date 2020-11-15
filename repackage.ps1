@@ -3,7 +3,7 @@
 # 2. change the version below
 # 3. change the version in pushPackage.ps1
 
-$ver = "0.2.4"
+$ver = "0.2.5"
 $nuserver = "https://www.myget.org/F/yummy-ag/api/v2/package"
 
 Write-Host -ForegroundColor Cyan "Punfai.Report..."
@@ -16,7 +16,9 @@ Write-Host -ForegroundColor Cyan "OfficeOpenXml..."
 dotnet pack .\src\Punfai.Report.OfficeOpenXml --configuration Release --output .\
 
 Write-Host -ForegroundColor Cyan "Ibex..."
-nuget pack .\src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj -properties Configuration=Release
+#nuget pack .\src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj -properties Configuration=Release
+dotnet pack .\src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj --configuration Release --output .\
 
 Write-Host -ForegroundColor Cyan "Wpf..."
-nuget pack .\src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj -properties Configuration=Release -symbols
+#nuget pack .\src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj -properties Configuration=Release -symbols
+dotnet pack .\src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj --configuration Release --output .\

@@ -9,15 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Punfai.Report.IronScript", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Punfai.Report.OfficeOpenXml", "src\Punfai.Report.OfficeOpenXml\Punfai.Report.OfficeOpenXml.csproj", "{2EB70E45-DE20-4C55-B600-F7CF069898A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punfai.Report.Wpf", "src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj", "{86E03BE8-4840-4A3D-B2C1-EC3D8FB88325}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Punfai.Report.Wpf", "src\Punfai.Report.Wpf\Punfai.Report.Wpf.csproj", "{86E03BE8-4840-4A3D-B2C1-EC3D8FB88325}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2C2BA5BF-488B-4DD7-B39A-5AE53210DA30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PunReportTest", "test\PunReportTest\PunReportTest.csproj", "{7F31BC0C-3F7F-499C-8C28-DFA2DB7D325A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{607D13C3-DC7D-437F-B7E5-B18B00EE0CC8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PunRunWpf", "demo\PunRunWpf\PunRunWpf.csproj", "{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F548484-4D74-4A9D-B581-7F482B832C1D}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		repackage.ps1 = repackage.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Punfai.Report.Ibex", "src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj", "{F245CABE-5E8E-4898-916D-4F2711697B02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Punfai.Report.Ibex", "src\Punfai.Report.Ibex\Punfai.Report.Ibex.csproj", "{F245CABE-5E8E-4898-916D-4F2711697B02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbexReportTests", "test\IbexReportTests\IbexReportTests.csproj", "{5D36ACEF-AA0E-4D71-9158-E8D5DEB46C82}"
 EndProject
@@ -107,18 +105,6 @@ Global
 		{7F31BC0C-3F7F-499C-8C28-DFA2DB7D325A}.Release|x64.Build.0 = Release|Any CPU
 		{7F31BC0C-3F7F-499C-8C28-DFA2DB7D325A}.Release|x86.ActiveCfg = Release|Any CPU
 		{7F31BC0C-3F7F-499C-8C28-DFA2DB7D325A}.Release|x86.Build.0 = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|x64.Build.0 = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Debug|x86.Build.0 = Debug|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x64.ActiveCfg = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x64.Build.0 = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x86.ActiveCfg = Release|Any CPU
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D}.Release|x86.Build.0 = Release|Any CPU
 		{F245CABE-5E8E-4898-916D-4F2711697B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F245CABE-5E8E-4898-916D-4F2711697B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F245CABE-5E8E-4898-916D-4F2711697B02}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -173,7 +159,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7F31BC0C-3F7F-499C-8C28-DFA2DB7D325A} = {2C2BA5BF-488B-4DD7-B39A-5AE53210DA30}
-		{7B8F1D36-904F-43F1-9CC5-5ACDDB802A1D} = {607D13C3-DC7D-437F-B7E5-B18B00EE0CC8}
 		{5D36ACEF-AA0E-4D71-9158-E8D5DEB46C82} = {2C2BA5BF-488B-4DD7-B39A-5AE53210DA30}
 		{477F3266-7FDE-46CC-8BB5-E344F9C388D0} = {2C2BA5BF-488B-4DD7-B39A-5AE53210DA30}
 		{B3AB9FAB-B865-4EC8-B264-D14E5EE6A29E} = {2C2BA5BF-488B-4DD7-B39A-5AE53210DA30}

@@ -1,7 +1,7 @@
 # watch the bug in VS where PackageVersion in the csproj file is not PackageVersion in the properties UI
 # 1. update version in .csproj for netcore libs and AssemblyInfo.cs for framework libs
 # 2. change the version below
-$ver = "0.2.4"
+$ver = "0.2.5"
 $nuserver = "https://www.myget.org/F/yummy-ag/api/v2/package"
 
 Write-Host -ForegroundColor Cyan "Punfai.Report..."
@@ -23,4 +23,4 @@ Remove-Item .\Punfai.Report.Ibex.$ver.nupkg
 Write-Host -ForegroundColor Cyan "Wpf..."
 nuget push .\Punfai.Report.Wpf.$ver.nupkg 17fcb248-be21-431b-9e69-15e4b0396c5a -Source $nuserver
 Remove-Item .\Punfai.Report.Wpf.$ver.nupkg
-Remove-Item .\Punfai.Report.Wpf.$ver.symbols.nupkg
+#Remove-Item .\Punfai.Report.Wpf.$ver.symbols.nupkg

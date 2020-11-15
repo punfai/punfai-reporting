@@ -2,11 +2,20 @@
   <PropertyGroup>
     <ProjectGuid>{F245CABE-5E8E-4898-916D-4F2711697B02}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Punfai.Report.Ibex</RootNamespace>
-    <AssemblyName>Punfai.Report.Ibex</AssemblyName>
     <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>Punfai.Report.Ibex</RootNamespace>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AssemblyName>Punfai.Report.Ibex</AssemblyName>
+    <PackageId>Punfai.Report.Ibex</PackageId>
+    <PackageVersion>0.2.5</PackageVersion>
+    <Authors>Nik Petroff</Authors>
+    <Description>WPF support for Punfai report scripting engine</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2020 (c) Punfai. All rights reserved.</Copyright>
+    <PackageTags>reporting reports pdf</PackageTags>
+    <FileVersion>0.2.5.0</FileVersion>
+    <Version>0.2.5</Version>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
     <Reference Include="ibex40">
