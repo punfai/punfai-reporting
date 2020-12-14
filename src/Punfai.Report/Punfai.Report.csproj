@@ -13,6 +13,7 @@
     <PackageTags>reporting reports</PackageTags>
     <FileVersion>0.2.5.0</FileVersion>
     <Version>0.2.5</Version>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
