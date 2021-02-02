@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-#if NETCOREAPP
+#if NET5_0
 using xmlpdf = ibex4;
 using ibex4;
 using ibex4.logging;
