@@ -1,8 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows;net472</TargetFrameworks>
-    <!--TargetFramework>net472</TargetFramework-->
+    <TargetFrameworks>net5.0-windows;</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <AssemblyName>Punfai.Report.Wpf</AssemblyName>
     <PackageId>Punfai.Report.Wpf</PackageId>
@@ -18,23 +17,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
-    <Reference Include="PresentationCore" /> 
-    <Reference Include="PresentationFramework" /> 
-    <Reference Include="ReachFramework" /> 
-    <Reference Include="System" /> 
-    <Reference Include="System.Core" /> 
-    <Reference Include="System.Printing" /> 
-    <Reference Include="System.Xaml" /> 
-    <Reference Include="System.Xml.Linq" /> 
-    <Reference Include="System.Data.DataSetExtensions" /> 
-    <Reference Include="Microsoft.CSharp" /> 
-    <Reference Include="System.Data" /> 
-    <Reference Include="System.Xml" /> 
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0-windows' ">
+  <ItemGroup>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.1" />
   </ItemGroup>
 

@@ -17,7 +17,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Can_get_some_default_fo()
         {
-            IbexFoReportType report = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType report = new IbexFoReportType();
             byte[] templateBytes;
             report.GetDefaultTemplate(out templateBytes);
 
@@ -33,7 +33,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Can_get_some_test_fo()
         {
-            IbexFoReportType report = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType report = new IbexFoReportType();
             byte[] template;
             Assembly _assembly;
             try
@@ -61,7 +61,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Can_make_a_hello_world_pdf()
         {
-            IbexFoReportType report = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType report = new IbexFoReportType();
             byte[] template;
             Assembly _assembly;
             try
@@ -101,7 +101,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Can_use_a_fo_to_make_a_pdf()
         {
-            IbexFoReportType report = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType report = new IbexFoReportType();
             byte[] templateBytes;
             report.GetDefaultTemplate(out templateBytes);
             var t = report.CreateTemplate(templateBytes);

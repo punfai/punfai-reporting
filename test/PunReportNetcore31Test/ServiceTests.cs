@@ -17,7 +17,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Service_works_with_embedded_repo()
         {
-            IbexFoReportType foReportType = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType foReportType = new IbexFoReportType();
             var r1 = new ReportInfo("Hello World", foReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "PunReportNetcore31Test.hello_world.fo";
             var reports = new List<ReportInfo>();
@@ -55,7 +55,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Missing_template_gives_good_error()
         {
-            IbexFoReportType foReportType = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType foReportType = new IbexFoReportType();
             var r1 = new ReportInfo("Hello World", foReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "Cant_Find_Me.hello_world.fo";
             var reports = new List<ReportInfo>();
@@ -100,7 +100,7 @@ namespace PunReportNetcore31Test
         [Fact]
         public async Task Bad_template_gives_good_error()
         {
-            IbexFoReportType foReportType = new IbexFoReportType(ibexRuntimeKey);
+            IbexFoReportType foReportType = new IbexFoReportType();
             var r1 = new ReportInfo("Hello World", foReportType.Name, PassThroughEngine.ScriptingLanguage);
             r1.TemplateFileName = "IbexReportTests.bad.hello_world.fo";
             var reports = new List<ReportInfo>();
