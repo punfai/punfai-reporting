@@ -19,7 +19,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ibex.PDF.Creator.Core" Version="4.11.32" />
+    <PackageReference Include="Ibex.PDF.Creator.Core" Version="4.11.44" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="template.xslt" />
