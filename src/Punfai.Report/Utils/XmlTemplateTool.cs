@@ -9,12 +9,15 @@ namespace Punfai.Report.Utils
 {
     public class XmlTemplateTool
     {
+        public static string[] TrueValues = new string[] { "True", "true", "1" };
+        public static string IfAttribute { get; set; }
         public static string RepeatAttribute { get; set; }
         public static string RepeatAttributeStart { get; set; }
         public static string RepeatAttributeEnd { get; set; }
         public static string DefaultItemAlias { get; set; }
         static XmlTemplateTool()
         {
+            IfAttribute = "mesh-if";
             RepeatAttribute = "mesh-repeat";
             RepeatAttributeStart = "mesh-repeat-start";
             RepeatAttributeEnd = "mesh-repeat-end";
@@ -23,22 +26,68 @@ namespace Punfai.Report.Utils
         public static void ReplaceKey(XElement element, string key, dynamic dvalue)
         {
             /* 
-             * a) actual placeholder replacement occurs when dvalue is a string
+             * a) actual placeholder replacement occurs when dvalue is a string, also where ifs are handled
              * b) repeaters are searched for and generated if dvalue is IEnumerable
              * c) other objects are .ToString()ed.
              */
             string placeHolder = "{{" + key + "}}";
             if (dvalue == null) dvalue = "";
-            if (dvalue is string)
+            if (dvalue is string sval)
             {
                 // a) This is where the actual placeholder replacement happens!
+                // a.i) but hold on it might be an if
+                IEnumerable<XElement> iflist =
+                    from el in element.Descendants()
+                    where el.Attributes(IfAttribute).Count() > 0 &&
+                        ((string)el.Attribute(IfAttribute) == key ||
+                        ((string)el.Attribute(IfAttribute)).StartsWith($"{key}=") ||
+                        ((string)el.Attribute(IfAttribute)).EndsWith($"={key}"))
+                    select el;
+                // process this here and we are doing one at a time. we can compare with a constant but not another variable.
+                // process this at the end and all replacing is done then we can look for ifs
+                // todo: do the better way when we rise above ReplaceKey and have a higher vantage point.
+                foreach (var el in iflist.ToArray())
+                {
+                    var attvalue = (string)el.Attribute(IfAttribute);
+                    if (attvalue == key && TrueValues.Contains(sval))
+                    {
+                        GenerateIf(el);
+                    }
+                    else
+                    {
+                        var bits = attvalue.Split('=');
+                        if (bits.Length == 2)
+                        {
+                            if (bits[0] == key && bits[1] == sval ||
+                                bits[1] == key && bits[0] == sval)
+                                GenerateIf(el);
+                            else
+                                el.Remove();
+                        }
+                        else
+                            el.Remove();
+                    }
+                }
+
+                // ok just replace node content
                 var holders = element.DescendantNodes().OfType<XText>().Where(n => n.Value.Contains(placeHolder));
                 foreach (var t in holders)
                 {
                     //News.AddDebug("text node match: {1}::{0}", t.Value, t.Parent.Name);
                     StringBuilder s = new StringBuilder(t.Value);
-                    s.Replace(placeHolder, (string)dvalue);
+                    s.Replace(placeHolder, sval);
                     t.Value = s.ToString();
+                };
+                // let's see if we can replace attribute content
+                var attholders = element.Descendants().Where(n => n.Attributes().Any(att => att.Value.Contains(placeHolder)));
+                foreach (var el in attholders)
+                {
+                    foreach (var att in el.Attributes().Where(att => att.Value.Contains(placeHolder)))
+                    {
+                        StringBuilder s = new StringBuilder(att.Value);
+                        s.Replace(placeHolder, sval);
+                        att.Value = s.ToString();
+                    }
                 };
             }
             else if (dvalue is IEnumerable)
@@ -111,6 +160,20 @@ namespace Punfai.Report.Utils
             {
                 // c)
                 ReplaceKey(element, key, dvalue.ToString());
+            }
+        }
+        public static void GenerateIf(XElement template)
+        {
+            bool disappearing = template.Name.LocalName == IfAttribute;
+            if (disappearing)
+            {
+                XElement ifblock = new XElement(template);
+                template.AddBeforeSelf(ifblock.Nodes().ToArray());
+                template.Remove();
+            }
+            else
+            {
+                template.Attribute(IfAttribute).Remove();
             }
         }
         public static void GenerateRepeat(XElement template, dynamic list, string itemAlias)
