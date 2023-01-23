@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{F245CABE-5E8E-4898-916D-4F2711697B02}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <RootNamespace>Punfai.Report.Ibex</RootNamespace>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <AssemblyName>Punfai.Report.Ibex</AssemblyName>
@@ -19,7 +19,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ibex.PDF.Creator.Core" Version="4.11.44" />
+    <PackageReference Include="Ibex.PDF.Creator" Version="6.4.9.3" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="template.xslt" />
