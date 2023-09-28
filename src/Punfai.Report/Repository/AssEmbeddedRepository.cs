@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 
 namespace Punfai.Report
 {
+    /// <summary>
+    /// Skip the database store and embed templates and scripts in the assembly.
+    /// Initialise it with SaveAsync which caches the reports in an instance variable.
+    /// TemplateFileName is the path of the embedded template resource.
+    /// Script is passed in as a property on the report, and often null when ScriptingEngine == PassThroughEngine.
+    /// If script is null and not using passthroughengine, then look for an embedded script. Follow the convention.
+    /// Script resource = TemplateFileName minus the extension plus .script.
+    /// So make sure TemplateFileName has an extension like .xml|.csv|.txt
+    /// If template and script is null I think it should auto serialise your data to a csv if reportType=csv
+    /// </summary>
     public class AssEmbeddedRepository : IReportRepository
     {
         private readonly Assembly assembly;
@@ -30,7 +40,7 @@ namespace Punfai.Report
             return Task.FromResult(r);
         }
 
-        public Task<IEnumerable<ReportInfo>> GetAllAsync(int pageIndex = 0, int pageSize = 10)
+        public Task<IEnumerable<ReportInfo>> GetAllAsync(int pageIndex = 0, int pageSize = 0)
         {
             return Task.FromResult((IEnumerable<ReportInfo>)reports.ToArray());
         }
@@ -44,12 +54,32 @@ namespace Punfai.Report
         {
             return Task.FromResult(reports.FirstOrDefault(a => a.Name == name));
         }
-
         public async Task<string> GetScriptAsync(int id)
         {
             var r = reports.FirstOrDefault(a => a.ID == id);
             if (r == null) throw new Exception($"Report not found, id={id}");
-            var script = r.Script;
+            string script;
+            if (r.Script == null && r.ScriptingLanguage != PassThroughEngine.ScriptingLanguage && r.TemplateFileName != null)
+            {
+                // this is the convention
+                var resourcePath = string.Concat(r.TemplateFileName.AsSpan(0, r.TemplateFileName.LastIndexOf('.')), ".script");
+                if (resourcePath == null)
+                    return null;
+                Stream scriptStream;
+                try
+                {
+                    scriptStream = assembly.GetManifestResourceStream(resourcePath);
+                    if (scriptStream == null) throw new Exception();
+                }
+                catch (Exception)
+                {
+                    throw new Exception($"embedded template resource not found {resourcePath}");
+                }
+                var reader = new StreamReader(scriptStream, new UTF8Encoding(false));
+                script = await reader.ReadToEndAsync();
+            }
+            else
+                script = r.Script;
             return script;
         }
 
@@ -73,7 +103,8 @@ namespace Punfai.Report
             }
             catch (Exception)
             {
-                throw new Exception($"embedded template resource not found {resourcePath}");
+                return Task.FromResult(new byte[] { }); // could be a csv that doesn't want a template.
+                //throw new Exception($"embedded template resource not found {resourcePath}");
             }
             var reader = new BinaryReader(templateStream, new UTF8Encoding(false));
             var template = reader.ReadBytes((int)reader.BaseStream.Length);

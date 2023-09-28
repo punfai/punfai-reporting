@@ -25,6 +25,7 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
 
         public Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
+            StringBuilder errors = new StringBuilder();
             using (Stream docstream = new MemoryStream())
             {
                 byte[] templateBytes = t.GetTemplateBytes();
@@ -34,16 +35,16 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
                 using (SpreadsheetDocument doc = SpreadsheetDocument.Open(docstream, true))
                 {
                     // shared string part
-                    if (doc.WorkbookPart.SharedStringTablePart != null) doPart(doc.WorkbookPart.SharedStringTablePart, stuffing);
+                    if (doc.WorkbookPart.SharedStringTablePart != null) doPart(doc.WorkbookPart.SharedStringTablePart, stuffing, errors);
                     // some other part
-                    if (doc.WorkbookPart.WorkbookStylesPart != null) doPart(doc.WorkbookPart.WorkbookStylesPart, stuffing);
+                    if (doc.WorkbookPart.WorkbookStylesPart != null) doPart(doc.WorkbookPart.WorkbookStylesPart, stuffing, errors);
                     // some other part
-                    if (doc.WorkbookPart.CalculationChainPart != null) doPart(doc.WorkbookPart.CalculationChainPart, stuffing);
+                    if (doc.WorkbookPart.CalculationChainPart != null) doPart(doc.WorkbookPart.CalculationChainPart, stuffing, errors);
 
                     var worksheets = doc.WorkbookPart.WorksheetParts.ToList();
                     worksheets.ForEach(w =>
                     {
-                        doPart(w, stuffing);
+                        doPart(w, stuffing, errors);
                     });
                 }
                 docstream.Position = 0;
@@ -51,13 +52,13 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
             }
             return Task.FromResult<bool>(true);
         }
-        private void doPart(OpenXmlPart part, IDictionary<string, dynamic> stuffing)
+        private void doPart(OpenXmlPart part, IDictionary<string, dynamic> stuffing, StringBuilder errors)
         {
             try
             {
                 XDocument xdoc1 = part.GetXDocument();
                 foreach (KeyValuePair<string, dynamic> pair in stuffing)
-                    XmlTemplateTool.ReplaceKey(xdoc1.Root, pair.Key, pair.Value);
+                    XmlTemplateTool.ReplaceKey(xdoc1.Root, pair.Key, pair.Value, errors);
                 part.PutXDocument(xdoc1);
             }
             catch (Exception ex) 

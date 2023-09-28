@@ -70,15 +70,17 @@ namespace Punfai.Report.Fillers
                 {
                     // 2. 
                     Debug.WriteLine("TextFiller.Fill", "custom text template");
-                    string[] lines = fulltemplate.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    // windows is \r\n, wrong git settings on windows can give us \n so use \n and trim \r
+                    string[] lines = fulltemplate.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
                     List<string> linesClean = new List<string>();
                     foreach (var line in lines)
                         if (!line.StartsWith("#") && !line.StartsWith("//") && !line.StartsWith("--"))
-                            linesClean.Add(line);
+                            linesClean.Add(line.TrimEnd('\r'));
 
                     if (linesClean.Count != blockkeys.Count())
                     {
                         Debug.WriteLine("template line count does not match data row block count");
+                        LastError = "template line count does not match data row block count";
                         return false;
                     }
                     // loop over blocks

@@ -42,7 +42,8 @@ namespace Punfai.Report.Fillers
                 if (string.IsNullOrEmpty(fulltemplate))
                 {
                     // 1. 
-                    dynamic rows = stuffing.Values.FirstOrDefault();
+                    dynamic rows = stuffing["rows"];
+                    if (rows == null) rows = stuffing.Values.FirstOrDefault(); // out with it?
                     //dynamic rows = stuffing.Values.FirstOrDefault(a => a is IList<object>);
                     if (rows == null) continue;
                     try
@@ -69,11 +70,11 @@ namespace Punfai.Report.Fillers
                 {
                     // 2. 
                     Debug.WriteLine("CsvFiller.Fill", "custom csv template");
-                    string[] lines = fulltemplate.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] lines = fulltemplate.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
                     List<string> linesClean = new List<string>();
                     foreach (var line in lines)
                         if (!line.StartsWith("#") && !line.StartsWith("//") && !line.StartsWith("--"))
-                            linesClean.Add(line);
+                            linesClean.Add(line.TrimEnd());
                     string headerTemplate = null;
                     string rowTemplate = null;
                     if (linesClean.Count == 1) rowTemplate = linesClean[0];
@@ -140,13 +141,13 @@ namespace Punfai.Report.Fillers
             string sval;
             if (oval == null) sval = "";
             else sval = oval.ToString();
-            s.Append(sval);
+            s.Append(sval.Replace(",", "").Replace("$", "")); // switch stripping? useful for string numbers {number:c2}
             s.Append(',');
         }
         private void addString(string sval, StringBuilder s, bool quotes)
         {
             if (quotes) s.Append('"');
-            s.Append(sval);
+            s.Append(sval.Replace(",","").Replace("$","")); // switch stripping? useful for string numbers {number:c2}
             if (quotes) s.Append('"');
             s.Append(',');
         }

@@ -230,7 +230,7 @@ namespace Punfai.Report.Wpf
             return baseService.GetReportType(reportTypeName);
         }
 
-        public Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
+        public Task<bool> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
         {
             return baseService.GenerateReportAsync(report, output, stdout, closeStream);
         }
@@ -249,15 +249,11 @@ namespace Punfai.Report.Wpf
             return baseService.FillReportAsync(t, rt, stuffing, output);
         }
 
-        public Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
+        public Task<bool> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
             return baseService.GenerateReportAsync(reportName, inputParams, output, stdout, closeStream);
         }
 
-        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
-        {
-            return baseService.GenerateReportAsync(reportName, inputParams, output, stdout, closeStream);
-        }
         #endregion
 
     }

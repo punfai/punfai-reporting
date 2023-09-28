@@ -45,7 +45,8 @@ namespace Punfai.Report
 
             var e = this.scriptingEngines.FirstOrDefault(a => a.ScriptLanguage == report.ScriptingLanguage);
             if (e == null) return null; // or throw
-            return await e.RunScriptAsync(report.Parameters, script, resources, stdout);
+            var res = new Dictionary<string, dynamic>(resources.Where(a => report.Dependencies.Contains(a.Key)));
+            return await e.RunScriptAsync(report.Parameters, script, res, stdout);
         }
 
         internal class nulllogger
@@ -65,11 +66,10 @@ namespace Punfai.Report
         #endregion
 
         #region do everything: generate
-        public async Task<string> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
+        public async Task<bool> GenerateReportAsync(ReportInfo report, Stream output, Stream stdout = null, bool closeStream = true)
         {
             if (output == null) throw new ArgumentNullException("output");
             bool ok;
-            string outputPath = "OK.";
 
             var stuffing = await RunScriptAsync(report, stdout);
 
@@ -89,16 +89,12 @@ namespace Punfai.Report
                 }
                 catch (Exception) { }
             }
-            if (ok)
-                return outputPath;
-            else
-                return "Generation failed.";
+            return ok;
         }
-        public async Task<string> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
+        public async Task<bool> GenerateReportAsync(string reportName, IDictionary<string, object> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
         {
             if (output == null) throw new ArgumentNullException("output");
             bool ok;
-            string outputPath = "OK.";
 
             ReportInfo reportOrig = await reprepo.GetByNameAsync(reportName);
             var report = reportOrig.Copy();
@@ -108,7 +104,7 @@ namespace Punfai.Report
             var stuffing = await RunScriptAsync(report, stdout);
 
             byte[] templateBytes = await reprepo.GetTemplateAsync(report.ID);
-            if (templateBytes == null) throw new Exception("Can't generate a report with no template.");
+            //if (templateBytes == null) throw new Exception("Can't generate a report with no template.");
 
             var rt = GetReportType(report.ReportType);
             var t = rt.CreateTemplate(templateBytes);
@@ -125,7 +121,7 @@ namespace Punfai.Report
             }
 
             if (ok)
-                return outputPath;
+                return true;
             else
             {
                 if (stdout != null)
@@ -134,18 +130,8 @@ namespace Punfai.Report
                     await w.WriteAsync(rt.Filler.LastError);
                     await w.FlushAsync();
                 }
-                return $"Generation failed. {rt.Filler.LastError}";
+                return false;
             }
-        }
-
-        public Task<string> GenerateReportAsync(string reportName, IEnumerable<(string, object)> inputParams, Stream output, Stream stdout = null, bool closeStream = true)
-        {
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            foreach (var pair in inputParams)
-            {
-                dic[pair.Item1] = pair.Item2;
-            }
-            return GenerateReportAsync(reportName, dic, output, stdout, closeStream);
         }
 
         #endregion
@@ -154,16 +140,16 @@ namespace Punfai.Report
         public static async Task<ReportingService> CreateAssemblyEmbedded(
             IEnumerable<IReportType> reportTypes
             , Assembly assembly
-            , IEnumerable<ReportInfo> reports)
+            , IEnumerable<ReportInfo> reports
+            , Dictionary<string, object> resources = null)
         {
             AssEmbeddedRepository reprepo = new AssEmbeddedRepository(assembly, reportTypes);
             foreach (var r in reports)
             {
                 await reprepo.SaveAsync(r);
             }
-            var scriptingEngines = new IReportScriptingEngine[] { new PassThroughEngine() };
-            Dictionary<string, object> resources = new Dictionary<string, object>();
-            ReportingService reportingService = new ReportingService(reprepo, reportTypes, scriptingEngines, resources);
+            var scriptingEngines = new IReportScriptingEngine[] { new PassThroughEngine(), new CSScriptEngine() };
+            ReportingService reportingService = new ReportingService(reprepo, reportTypes, scriptingEngines, resources ?? new Dictionary<string, object>());
             return reportingService;
         }
         public static IEnumerable<IReportType> GetReportTypes()

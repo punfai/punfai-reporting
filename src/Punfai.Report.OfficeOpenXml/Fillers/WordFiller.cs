@@ -25,6 +25,7 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
 
         public Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
+            StringBuilder errors = new StringBuilder();
             using (Stream docstream = new MemoryStream())
             {
                 byte[] templateBytes = t.GetTemplateBytes();
@@ -34,17 +35,17 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
                 using (WordprocessingDocument doc = WordprocessingDocument.Open(docstream, true))
                 {
                     // main document part
-                    if (doc.MainDocumentPart != null) doPart(doc.MainDocumentPart, stuffing);
+                    if (doc.MainDocumentPart != null) doPart(doc.MainDocumentPart, stuffing, errors);
 
                     var headers = doc.MainDocumentPart.HeaderParts.ToList();
                     headers.ForEach(p =>
                     {
-                        doPart(p, stuffing);
+                        doPart(p, stuffing, errors);
                     });
                     var footers = doc.MainDocumentPart.FooterParts.ToList();
                     footers.ForEach(p =>
                     {
-                        doPart(p, stuffing);
+                        doPart(p, stuffing, errors);
                     });
                 }
                 docstream.Position = 0;
@@ -52,13 +53,13 @@ namespace Punfai.Report.OfficeOpenXml.Fillers
             }
             return Task.FromResult<bool>(true);
         }
-        private void doPart(OpenXmlPart part, IDictionary<string, dynamic> stuffing)
+        private void doPart(OpenXmlPart part, IDictionary<string, dynamic> stuffing, StringBuilder errors)
         {
             try
             {
                 XDocument xdoc1 = part.GetXDocument();
                 foreach (KeyValuePair<string, dynamic> pair in stuffing)
-                    XmlTemplateTool.ReplaceKey(xdoc1.Root, pair.Key, pair.Value);
+                    XmlTemplateTool.ReplaceKey(xdoc1.Root, pair.Key, pair.Value, errors);
                 part.PutXDocument(xdoc1);
             }
             catch (Exception ex) { Console.WriteLine("XmlFiller.Fill", "bad excel part", ex); }

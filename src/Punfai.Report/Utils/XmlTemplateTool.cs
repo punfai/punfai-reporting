@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace Punfai.Report.Utils
 {
+    // would be good to support formatting like TextTemplateTool
     public class XmlTemplateTool
     {
         public static string[] TrueValues = new string[] { "True", "true", "1" };
@@ -23,13 +24,14 @@ namespace Punfai.Report.Utils
             RepeatAttributeEnd = "mesh-repeat-end";
             DefaultItemAlias = "item";
         }
-        public static void ReplaceKey(XElement element, string key, dynamic dvalue)
+        public static void ReplaceKey(XElement element, string key, dynamic dvalue, StringBuilder errors)
         {
             /* 
              * a) actual placeholder replacement occurs when dvalue is a string, also where ifs are handled
              * b) repeaters are searched for and generated if dvalue is IEnumerable
              * c) other objects are .ToString()ed.
              */
+            string placeHolderFormatted = "{{" + key + ":";
             string placeHolder = "{{" + key + "}}";
             if (dvalue == null) dvalue = "";
             if (dvalue is string sval)
@@ -78,6 +80,30 @@ namespace Punfai.Report.Utils
                     s.Replace(placeHolder, sval);
                     t.Value = s.ToString();
                 };
+                var fholders = element.DescendantNodes().OfType<XText>().Where(n => n.Value.Contains(placeHolderFormatted));
+                foreach (var t in fholders)
+                {
+                    StringBuilder s = new StringBuilder(t.Value);
+                    string ss = t.Value;
+                    int index = ss.IndexOf(placeHolderFormatted);
+                    while (index > -1)
+                    {
+                        // find format and full custom placeholder
+                        int endIndex = ss.IndexOf("}}", index);
+                        string customPlaceHolder = ss.Substring(index, endIndex - index + 2);
+                        int formatStart = customPlaceHolder.IndexOf(':') + 1;
+                        int formatLength = customPlaceHolder.Length - formatStart - 2;
+                        string format = customPlaceHolder.Substring(formatStart, formatLength);
+                        var options = FieldFormatOptions.ParseFormatting(format, key);
+                        if (string.IsNullOrWhiteSpace(sval) && options.Required)
+                            errors.AppendLine(string.Format("Required field {0} not specified", key));
+                        string formattedString = options.ApplyFormat(sval, errors);
+                        s.Replace(customPlaceHolder, formattedString);
+                        ss = s.ToString();
+                        index = ss.IndexOf(placeHolderFormatted);
+                    }
+                    t.Value = s.ToString();
+                };
                 // let's see if we can replace attribute content
                 var attholders = element.Descendants().Where(n => n.Attributes().Any(att => att.Value.Contains(placeHolder)));
                 foreach (var el in attholders)
@@ -106,10 +132,10 @@ namespace Punfai.Report.Utils
                     foreach (var pair in (IDictionary<object, object>)dvalue)
                     {
                         string keywithdot = string.Format("{0}.{1}", key, pair.Key.ToString());
-                        ReplaceKey(element, keywithdot, pair.Value);
+                        ReplaceKey(element, keywithdot, pair.Value, errors);
                         // if no alias was specified, let em omit the item dot prefix
                         if (key == DefaultItemAlias)
-                            ReplaceKey(element, pair.Key.ToString(), pair.Value);
+                            ReplaceKey(element, pair.Key.ToString(), pair.Value, errors);
                     }
                 }
                 else if (dvalue is IDictionary<string, object>)
@@ -118,10 +144,10 @@ namespace Punfai.Report.Utils
                     foreach (var pair in (IDictionary<string, object>)dvalue)
                     {
                         string keywithdot = string.Format("{0}.{1}", key, pair.Key);
-                        ReplaceKey(element, keywithdot, pair.Value);
+                        ReplaceKey(element, keywithdot, pair.Value, errors);
                         // if no alias was specified, let em omit the item dot prefix
                         if (key == DefaultItemAlias)
-                            ReplaceKey(element, pair.Key, pair.Value);
+                            ReplaceKey(element, pair.Key, pair.Value, errors);
                     }
                 }
                 else if (dvalue is IList<object>)
@@ -130,9 +156,9 @@ namespace Punfai.Report.Utils
                     for (int i = 0; i < ((IList<object>)dvalue).Count; i++)
                     {
                         string indexerkey = string.Format("{0}[{1}]", key, i);
-                        ReplaceKey(element, indexerkey, dvalue[i]);
+                        ReplaceKey(element, indexerkey, dvalue[i], errors);
                         // if no alias was specified, let em omit the item dot prefix
-                        if (key == DefaultItemAlias) ReplaceKey(element, "[" + i.ToString() + "]", dvalue[i]);
+                        if (key == DefaultItemAlias) ReplaceKey(element, "[" + i.ToString() + "]", dvalue[i], errors);
                     }
                 }
                 // ii. recursive
@@ -151,15 +177,15 @@ namespace Punfai.Report.Utils
                     string att = (string)el.Attribute(RepeatAttribute);
                     if (att.EndsWith(" in " + key)) itemAlias = att.Remove(att.IndexOf(" in " + key));
                     else itemAlias = DefaultItemAlias;
-                    GenerateRepeat(el, dvalue, itemAlias);
+                    GenerateRepeat(el, dvalue, itemAlias, errors);
                 }
                 // an enumerable should be repeated, but maybe ToString()ing it is best for  {{list}}
-                ReplaceKey(element, key, dvalue.ToString());
+                ReplaceKey(element, key, dvalue.ToString(), errors);
             }
             else
             {
                 // c)
-                ReplaceKey(element, key, dvalue.ToString());
+                ReplaceKey(element, key, dvalue.ToString(), errors);
             }
         }
         public static void GenerateIf(XElement template)
@@ -176,7 +202,7 @@ namespace Punfai.Report.Utils
                 template.Attribute(IfAttribute).Remove();
             }
         }
-        public static void GenerateRepeat(XElement template, dynamic list, string itemAlias)
+        public static void GenerateRepeat(XElement template, dynamic list, string itemAlias, StringBuilder errors)
         {
             bool disappearing = template.Name.LocalName == RepeatAttribute;
             template.Attribute(RepeatAttribute).Remove();
@@ -187,12 +213,12 @@ namespace Punfai.Report.Utils
                 {
                     XElement repeat = new XElement(template);
                     string dicKey = string.Format("{0}.{1}", itemAlias, "Key");
-                    ReplaceKey(repeat, dicKey, pair.Key.ToString());
+                    ReplaceKey(repeat, dicKey, pair.Key.ToString(), errors);
                     string dicValue = string.Format("{0}.{1}", itemAlias, "Value");
-                    ReplaceKey(repeat, dicValue, pair.Value);
+                    ReplaceKey(repeat, dicValue, pair.Value, errors);
                     // can omit the item dot prefix if no item alias was specified, though it could screw up complex nested situations by stepping on the wrong toes.
-                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Key", pair.Key.ToString());
-                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Value", pair.Value);
+                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Key", pair.Key.ToString(), errors);
+                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Value", pair.Value, errors);
 
                     if (disappearing) template.AddBeforeSelf(repeat.Nodes().ToArray());
                     else template.AddBeforeSelf(repeat);
@@ -204,12 +230,12 @@ namespace Punfai.Report.Utils
                 {
                     XElement repeat = new XElement(template);
                     string dicKey = string.Format("{0}.{1}", itemAlias, "Key");
-                    ReplaceKey(repeat, dicKey, pair.Key);
+                    ReplaceKey(repeat, dicKey, pair.Key, errors);
                     string dicValue = string.Format("{0}.{1}", itemAlias, "Value");
-                    ReplaceKey(repeat, dicValue, pair.Value);
+                    ReplaceKey(repeat, dicValue, pair.Value, errors);
                     // can omit the item dot prefix if no item alias was specified, though it could screw up complex nested situations by stepping on the wrong toes.
-                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Key", pair.Key);
-                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Value", pair.Value);
+                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Key", pair.Key, errors);
+                    if (itemAlias == DefaultItemAlias) ReplaceKey(repeat, "Value", pair.Value, errors);
 
                     if (disappearing) template.AddBeforeSelf(repeat.Nodes().ToArray());
                     else template.AddBeforeSelf(repeat);
@@ -221,7 +247,7 @@ namespace Punfai.Report.Utils
                 foreach (dynamic dvalue in list)
                 {
                     XElement repeat = new XElement(template);
-                    ReplaceKey(repeat, itemAlias, dvalue);
+                    ReplaceKey(repeat, itemAlias, dvalue, errors);
                     if (disappearing) template.AddBeforeSelf(repeat.Nodes().ToArray());
                     else template.AddBeforeSelf(repeat);
                 }

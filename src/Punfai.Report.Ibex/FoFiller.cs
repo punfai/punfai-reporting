@@ -20,6 +20,7 @@ namespace Punfai.Report.Ibex
 
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
+            StringBuilder errors = new StringBuilder();
             // TODO: make this more asyncy
             XmlWriter fowriter = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = new UTF8Encoding(false), Indent = true, Async = true });
             // should only be one section
@@ -44,13 +45,14 @@ namespace Punfai.Report.Ibex
                 }
                 foreach (KeyValuePair<string, dynamic> pair in stuffing)
                 {
-                    XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value);
+                    XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value, errors);
                 }
                 // doc is now a filled out FO
                 doc.WriteTo(fowriter);
                 ok = true;
             }
             await fowriter.FlushAsync();
+            LastError = errors.ToString();
             return ok;
         }
         private void writeCharCodes(string s, int numChars)

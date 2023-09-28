@@ -17,6 +17,7 @@ namespace Punfai.Report.Fillers
 
         public async Task<bool> FillAsync(ITemplate t, IDictionary<string, dynamic> stuffing, Stream output)
         {
+            StringBuilder errors = new StringBuilder();
             // TODO: make this more asyncy
             XmlWriter writer = XmlWriter.Create(output, new XmlWriterSettings() { Encoding = new UTF8Encoding(false), Indent = true, Async = true });
             // should only be one section
@@ -26,7 +27,10 @@ namespace Punfai.Report.Fillers
                 try
                 {
                     var txt = t.GetSectionText(section);
-                    doc = XDocument.Parse(txt);
+                    if ((int)txt[0] == 65279)
+                        doc = XDocument.Parse(txt.Substring(1));
+                    else
+                        doc = XDocument.Parse(txt);
                 }
                 catch (Exception ex)
                 {
@@ -35,12 +39,12 @@ namespace Punfai.Report.Fillers
                 }
                 foreach (KeyValuePair<string, dynamic> pair in stuffing)
                 {
-                    XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value);
+                    XmlTemplateTool.ReplaceKey(doc.Root, pair.Key, pair.Value, errors);
                 }
                 doc.WriteTo(writer);
             }
             await writer.FlushAsync();
-            LastError = null;
+            LastError = errors.ToString();
             return true;
         }
     }

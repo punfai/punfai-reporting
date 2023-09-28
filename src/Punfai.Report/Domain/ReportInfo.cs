@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Punfai.Report.ReportTypes;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -6,11 +7,12 @@ namespace Punfai.Report
 {
     public class ReportInfo
     {
-        public ReportInfo(string name, string reportType, string scriptingLanguage)
+        public ReportInfo(string name, string reportType, string scriptingLanguage, string templateFileName = null)
         {
             this.Name = name;
             this.ReportType = reportType;
             this.ScriptingLanguage = scriptingLanguage;
+            this.TemplateFileName = templateFileName;
             ID = -1;
             Parameters = new ObservableCollection<InputParameter>();
         }
@@ -112,6 +114,21 @@ namespace Punfai.Report
                 args.TemplateFileName = templateFileName;
                 return this;
             }
+            public Builder CsXml(string name)
+            {
+                args.Name = name;
+                args.ScriptingLanguage = CSScriptEngine.ScriptingLanguage;
+                args.ReportType = new XmlReportType().Name;
+                return this;
+            }
+            public Builder CsCsv(string name)
+            {
+                args.Name = name;
+                args.ScriptingLanguage = CSScriptEngine.ScriptingLanguage;
+                args.ReportType = new CsvReportType().Name;
+                return this;
+            }
+
             public ReportInfo Build()
             {
                 //if (args.Script == null) throw new Exception("no ??? specified");

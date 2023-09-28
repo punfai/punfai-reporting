@@ -16,7 +16,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.19.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Punfai.Report\Punfai.Report.csproj" />
