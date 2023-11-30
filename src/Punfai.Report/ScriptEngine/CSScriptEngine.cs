@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace Punfai.Report
 {
-    public interface IRunScriptAsync
-    {
-        Task ProcessDataAsync(Dictionary<string, dynamic> data, Dictionary<string, dynamic> resources);
-    }
     public class CSScriptEngine : IReportScriptingEngine
     {
         public const string ScriptingLanguage = "C#Script";
@@ -45,25 +41,17 @@ namespace Punfai.Report
             // ... but how do we get these into resources?
             // !!! dynamic is not allow to do linq !!!
 
+            sb.AppendLine("public class Script");
+            sb.AppendLine("{");
             sb.AppendLine("public async Task ProcessDataAsync(Dictionary<string, dynamic> data, Dictionary<string, dynamic> resources)");
             sb.AppendLine("{");
-            //foreach (var pair in resources)
-            //{
-            //    sb.Append("\tdynamic ");
-            //    sb.Append(pair.Key);
-            //    sb.Append(" = resources[\"").Append(pair.Key).AppendLine("\"];");
-            //}
-            //foreach (var pair in parameters)
-            //{
-            //    sb.Append("\tdynamic ");
-            //    sb.Append(pair.Name);
-            //    sb.Append(" = data[\"").Append(pair.Name).AppendLine("\"];");
-            //}
             for (int i = (iLastUsing + 1) ?? 0; i < lines.Length; i++)
                 sb.AppendLine(lines[i].TrimEnd());
             sb.AppendLine("}");
+            sb.AppendLine("}");
+            sb.AppendLine("return new Script();");
             string fullScript = sb.ToString();
-            IRunScriptAsync runner = CSScript.Evaluator.LoadMethod<IRunScriptAsync>(fullScript);
+            var runner = CSScript.Evaluator.Eval(fullScript);
             await runner.ProcessDataAsync(data, resources);
             return data;
         }
